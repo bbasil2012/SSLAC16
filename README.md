@@ -1,5 +1,4 @@
-# esp2leds16ch-PWM
-SSLAC16
+# SSLAC16
 
 16-channel PWM controller entry for the aquarium LED light
 
@@ -40,5 +39,6 @@ network named esp8266_xxxxxxxx, connect to the network using as password last
 digits (xxxxxxxx) of network name
 7. Open your browser page http: /192.168.4.1
 ...
+
 Author: bbasil2012@gmail.com
 Thanks Google translator for the translation :)
