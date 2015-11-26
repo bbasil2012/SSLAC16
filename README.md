@@ -6,8 +6,9 @@
 
 1. ESP8266 board
 ￼￼2. PWM PCA9685 board
-3. The real-time clock DS1307 board or RTC PCF8563 board (optional)
+3. The real-time PCF8563 board (optional)
 ￼￼4. DS18x20 (optional)
+
 What's the result:
 1. 16 channels of 12-bit control (4096 steps) with a frequency of 50 - 1500Hz (can be
 customized)
@@ -38,7 +39,8 @@ esptool -v -cp / <COM port> -cb 115200 -ca 0x0006b000 -cf 0x0006b000.bin
 network named esp8266_xxxxxxxx, connect to the network using as password last
 digits (xxxxxxxx) of network name
 7. Open your browser page http: /192.168.4.1
-...
 
 Author: bbasil2012@gmail.com
 Thanks Google translator for the translation :)
+
+
