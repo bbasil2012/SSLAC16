@@ -42,15 +42,15 @@ github.com/esp8266/Arduino/blob/master/doc/boards.md
 https://github.com/igrr/esptool-ck/releases
 
 3. Flashing the main firmware file.
-esptool -v -cp <COM port> -cb 115200 -ca 0x00000000 -cf 0x0<versiin>.bin
+esptool -v -cp <COMport> -cb 115200 -ca 0x00000000 -cf 0x0<versiin>.bin
 
 4. Flashing the SPIFF image data file
 
 for 512kb module:
-esptool -v -cp <COM port> -cb 115200 -ca 0x0006b000 -cf 0x6b<version).spifs.bin.bin
+esptool -v -cp <COMport> -cb 115200 -ca 0x0006b000 -cf 0x6b<version).spifs.bin.bin
 
 For 4mb module:
-esptool -v -cp <COM port> -cb 115200 -ca 0x10000 -cf 0x1<version>.spiffs.bin
+esptool -v -cp <COMport> -cb 115200 -ca 0x10000 -cf 0x1<version>.spiffs.bin
 
 5. Reboot ESP8266
 
