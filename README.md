@@ -44,11 +44,14 @@ https://github.com/igrr/esptool-ck/releases
 3. Flashing the main firmware file.
 esptool -v -cp <COM port> -cb 115200 -ca 0x00000000 -cf 0x0<versiin>.bin
 
-4. Flashing the SPIFF image data file:
+4. Flashing the SPIFF image data file
+
 for 512kb module:
 esptool -v -cp <COM port> -cb 115200 -ca 0x0006b000 -cf 0x6b<version).spifs.bin.bin
+
 For 4mb module:
 esptool -v -cp <COM port> -cb 115200 -ca 0x10000 -cf 0x1<version>.spiffs.bin
+
 5. Reboot ESP8266
 
 6. After a reboot of the module in the list of available networks should appear WIFI
@@ -58,6 +61,7 @@ digits (xxxxxxxx) of network name
 7. Open your browser page http: /192.168.4.1
 
 Author: bbasil2012@gmail.com
+
 Thanks Google translator for the translation :)
 
 
