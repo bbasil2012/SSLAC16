@@ -1,6 +1,6 @@
 Copyright 2015 Vasiliy Bochin
 
-This Free Software for DIY (Do It Yourself) project only.
+This is Free Software for DIY (Do It Yourself) project only.
 Any commercial use is prohibited.
 
 Commercial use of the Software, or derivative works based thereon,  
