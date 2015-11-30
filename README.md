@@ -60,19 +60,17 @@ What you need to purchase:
 
 How to flashing firmware in ESP8266:
 
-1. read the notes and hints on connecting to a computer ESP8266 https://
-github.com/esp8266/Arduino/blob/master/doc/boards.md
+1. read the notes and hints on connecting to a computer ESP8266 https://github.com/esp8266/Arduino/blob/master/doc/boards.md
 
-2. For firmware highly recommend esptool
-https://github.com/igrr/esptool-ck/releases
+2. For firmware highly recommend esptool https://github.com/igrr/esptool-ck/releases
 
 3. Flashing the main firmware file.
-esptool -v -cp <COMport> -cb 115200 -ca 0x00000000 -cf 0x0<versiin>.bin
+esptool -v -cp <COMport> -cb 115200 -ca 0x00000000 -cf 0x0<version>.bin
 
 4. Flashing the SPIFF image data file
 
 for 512kb module:
-esptool -v -cp <COMport> -cb 115200 -ca 0x0006b000 -cf 0x6b<version).spifs.bin.bin
+esptool -v -cp <COMport> -cb 115200 -ca 0x0006b000 -cf 0x6b<version>.spifs.bin.bin
 
 For 4mb module:
 esptool -v -cp <COMport> -cb 115200 -ca 0x10000 -cf 0x1<version>.spiffs.bin
@@ -83,7 +81,7 @@ esptool -v -cp <COMport> -cb 115200 -ca 0x10000 -cf 0x1<version>.spiffs.bin
 network named SSLAC_xxxxxxxx, connect to the network using as password last
 digits (xxxxxxxx) of network name
 
-7. Open your browser page http: /192.168.4.1
+7. Open your browser page http://192.168.4.1
 
 Author: bbasil2012@gmail.com
 
