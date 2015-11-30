@@ -8,7 +8,7 @@ Why is simple:
 For the full functionality you need only 2 component and 5 wires.
 No need to learn any programming language for micro-controllers.
 No need to install on your computer any big and fat development environment, compile the source code, fix it etc.
-The necessary components are easily accessible.
+The necessary components are easily accessible. 
 
 Why smart:
 1. 16 control channels. Dimming 12 bits (4096 steps) with a frequency from 50 to 1500Hz.
