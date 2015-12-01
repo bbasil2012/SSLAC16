@@ -39,7 +39,7 @@ The controller can also have its own name: 1st_Room_control.
 4. Optional: module "Real Time Clock" on the  PCF8563. (Support for DS1307 RTC also have but I do not recommend to use it)
 5. Optional: temperature sensors type DS18x20.
 
-Updating firmware SSLAC.
+###Updating firmware SSLAC.
 
 We strongly recommend using a program that comes with Arduino IDE for ESP8266
 Separately it can be downloaded at various  OS here: https://github.com/igrr/esptool-ck/releases
