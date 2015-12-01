@@ -32,7 +32,7 @@ The controller can also have its own name: 1st_Room_control.
 11. Coming soon: master/slave mode for multiple controllers.
 
 
-###What you need to purchase:
+###What do you need to purchase:
 1. The module based ESP8266, recommend NodeMCU.
 2. Module on PCA9685.
 3. The power supply - will suit any battery charger from the mobile phone 5V and 300mA.
