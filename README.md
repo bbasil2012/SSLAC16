@@ -8,8 +8,7 @@ controled over Wi-Fi via WEB interface.
 ###Why it is “simple”:
 #####You need only 2 components and 5 wires for the full functionality.
 #####No need to learn any programming language for micro-controllers.
-#####No need to install on your computer any big and fat development environment, compile the source code, fix it etc.
-The necessary components are easily accessible.
+#####No need to install on your computer any big and fat development environment, compile the source code, fix it etc. The necessary components are easily accessible.
 #####Very low cost
 
 
