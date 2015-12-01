@@ -33,8 +33,8 @@ The controller can also have its own name: 1st_Room_control.
 
 
 What you need to purchase:
-1. The module based ESP8266, recommend NodeMCU.( link)
-2. Module on PCA9685.(link)
+1. The module based ESP8266, recommend NodeMCU.
+2. Module on PCA9685.
 3. The power supply - will suit any battery charger from the mobile phone 5V and 300mA.
 4. Optional: module "Real Time Clock" on the  PCF8563. (Support for DS1307 RTC also have but I do not recommend to use it)
 5. Optional: temperature sensors type DS18x20.
