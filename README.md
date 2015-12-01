@@ -1,6 +1,6 @@
-SSLAC16
+#SSLAC16
 
-Simple&Smart LED Aquarium Controller 16 channels 
+##Simple&Smart LED Aquarium Controller 16 channels 
 control over Wi-Fi via WEB interface.
 (ESP8266 based)
 
