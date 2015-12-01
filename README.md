@@ -44,11 +44,11 @@ The controller can also have its own name: 1st_Room_control.
 We strongly recommend using a program that comes with Arduino IDE for ESP8266
 Separately it can be downloaded at various  OS here: https://github.com/igrr/esptool-ck/releases
 
-1 .The main firmware:
+#####1 .The main firmware:
 esptool -v -cp <COM-port> -cb 115200 -ca 0x00000000 -cf 0x0-SSLAC16-v0.35rev2.bin
 where <COM-port> name COM port. For example on my Mac OS X NodeMCU designated as /dev/tty.SLAB_USBtoUART
 
-2. Additional file(SPIFFS image)
+#####2. Additional file(SPIFFS image)
 for 4mb ESP8266 module:
 esptool -v -cp / <COM-port> -cb 115200 -ca 0x00100000 -cf 0x1-SSLAC16-v0.35rev2.spiffs.bin
 
