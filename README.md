@@ -12,7 +12,7 @@ controled over Wi-Fi via WEB interface.
 #####Very low cost
 
 
-Why it is “smart”:\n
+Why it is “smart”:\n\r
 1. 16 channels. Dimming 12 bits of dept (4096 steps) with a frequency from 50 to 1500Hz.
 2. Each channel has individual settings for 4 time points: start of the Sunrise, start of the Day (maximum mode), start of the Sunset, start of the Night (minimum mode)
 3. For each channel individual setting for  ​​dimming values of the Day and Night mode, the values ​​in transient conditions (sunrise / sunset) calculated by the controller itself.
