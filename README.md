@@ -56,6 +56,6 @@ for 512k ESP8266 module:
 esptool -v -cp / <COM-port> -cb 115200 -ca 0x0006b000 -cf 0x6-SSLAC16-v0.35rev2.spiffs.bin
 
 
-3. After restarting the module in the list of available WiFi networks should appear SSLAC_xxxxxxxx Network
+After restarting the module in the list of available WiFi networks should appear SSLAC_xxxxxxxx Network
 
 Connect to the network module
