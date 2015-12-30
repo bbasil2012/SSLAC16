@@ -53,7 +53,7 @@ for 4mb ESP8266 module:
 esptool -v -cp "COM-port" -cb 115200 -ca 0x00100000 -cf 0x1-SSLAC16-v0.35rev2.spiffs.bin
 
 for 512k ESP8266 module:
-esptool -v -cp "COM-port" -cb 115200 -ca 0x0006b000 -cf 0x6-SSLAC16-v0.35rev2.spiffs.bin
+esptool -v -cp "COM-port" -cb 115200 -ca 0x0006b000 -cf 0x6b-SSLAC16-v0.35rev2.spiffs.bin
 
 
 After restarting the module in the list of available WiFi networks should appear SSLAC_xxxxxxxx Network
