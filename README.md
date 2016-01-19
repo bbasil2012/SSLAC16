@@ -29,7 +29,8 @@ The controller can also have its own name: 1st_Room_control.
 8. You can create and upload your own HTML pages for management.
 9. Experimental  function (use with caution) for firmware and  file system image upgrade "on the air". Now there is no need to connect the computer cable to the controller for the upgrade - it can be done from the Web interface allowing command download the appropriate file. (This feature is not available for modules with a capacity of flash memory 512kb)
 10. The module can to work as a client of existing Wi-Fi network and as WiFi "access point" - it can be connected to an existing Wi-Fi network and can connect to it from any device.
-11. Coming soon: master/slave mode for multiple controllers.
+11. Initial master/slave mode for multiple controllers.
+12. Temperature alarm with master/slave synchronisation functionality
 
 
 ###What do you need to purchase:
