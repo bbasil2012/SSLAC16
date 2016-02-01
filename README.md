@@ -1,4 +1,5 @@
 #SSLAC16
+(actual version 0.35rev5)
 
 ##Simple&Smart LED Aquarium Controller 16 channels 
 controled over Wi-Fi via WEB interface.
@@ -24,13 +25,14 @@ This allows you to remove the need to remember a channel number which correspond
 You can simply write: Warm_white, Sump_fan etc.
 Likewise, you can give the names of the temperature sensor: T_LedModule1, T_MainTank etc.
 And (relate) link  them to one-to-another only by their own names.
-The controller can also have its own name: 1st_Room_control.
+The controller can also have its own name ex: 1st_Tank_control.
 7. "Emergency light" - when suddenly in the night you need to turn light ON in the aquarium - press the "flash" button on the module. SSLAC forcibly convert all channels into daily (maximum) mode. Pressing the button disables.
 8. You can create and upload your own HTML pages for management.
-9. Experimental  function (use with caution) for firmware and  file system image upgrade "on the air". Now there is no need to connect the computer cable to the controller for the upgrade - it can be done from the Web interface allowing command download the appropriate file. (This feature is not available for modules with a capacity of flash memory 512kb)
+9. On the Air update/upgrade firmware (only for 4mb version), SPIFFS filesystem image (for all version) and individual files on the SPIFFS filesystem
 10. The module can to work as a client of existing Wi-Fi network and as WiFi "access point" - it can be connected to an existing Wi-Fi network and can connect to it from any device.
-11. Initial master/slave mode for multiple controllers.
+11. Master/slave mode for multiple controllers.
 12. Temperature alarm with master/slave synchronisation functionality
+
 
 
 ###What do you need to purchase:
@@ -46,16 +48,18 @@ We strongly recommend using a program that comes with Arduino IDE for ESP8266
 Separately it can be downloaded at various  OS here: https://github.com/igrr/esptool-ck/releases
 
 #####1 .The main firmware:
-esptool -v -cp "COM-port" -cb 115200 -ca 0x00000000 -cf 0x0-SSLAC16-v0.35rev2.bin
+esptool -v -cp "COM-port" -cb 115200 -ca 0x00000000 -cf 0x0-SSLAC16-v0.35rev5.bin
 where "COM-port" name of COM port. For example on my Mac OS X NodeMCU designated as /dev/tty.SLAB_USBtoUART
 #####Latest release can be found there: https://github.com/bbasil2012/SSLAC16/releases/latest
 #####2. Additional file(SPIFFS image)
 for 4mb ESP8266 module:
-esptool -v -cp "COM-port" -cb 115200 -ca 0x00100000 -cf 0x1-SSLAC16-v0.35rev2.spiffs.bin
+esptool -v -cp "COM-port" -cb 115200 -ca 0x00100000 -cf 0x1-SSLAC16-v0.35rev5.spiffs.bin
 
 for 512k ESP8266 module:
-esptool -v -cp "COM-port" -cb 115200 -ca 0x0006b000 -cf 0x6b-SSLAC16-v0.35rev2.spiffs.bin
+esptool -v -cp "COM-port" -cb 115200 -ca 0x0006b000 -cf 0x6b-SSLAC16-v0.35rev5.spiffs.bin
 
+You can upload SPIFFS image by WiFi network from page http://194.168.4.1/rescue 
+or upload all .html and .js files separately 
 
 After restarting the module in the list of available WiFi networks should appear SSLAC_xxxxxxxx Network
 
