@@ -63,4 +63,4 @@ or upload all .html and .js files separately
 
 After restarting the module in the list of available WiFi networks should appear SSLAC_xxxxxxxx Network
 
-Connect to the network module
+Connect to the network module, type http://192.168.4.1 in the address bar and ehjoy :)
