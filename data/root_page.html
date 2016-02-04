@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title>SSLAC16</title>
+  </head>
+  <body onload="get_info()" style="  background-color: #00BEBE;">
+    <form>
+      <h1>
+        <div id="hostname"></div>
+      </h1>
+      <h5>
+        <div id="ver"></div>
+      </h5>
+      <button formmethod="get" formaction="/cur_ch.html" type="submit">View
+        Channels status</button> <button formmethod="get" formaction="/Master_Slave.html"
+        type="submit">Experimental func</button><br>
+      <br>
+    </form>
+    <div id="body"></div>
+    <br>
+    <form> <input value="Save" onclick="sv()" type="button"> <button formmethod="get"
+        \="" formaction="/set_time.html" type="submit">Time SetUp</button> <button
+        formmethod="get" \="" formaction="/set_i2c.html" type="submit">I2C SetUp</button>
+      <button formmethod="get" \="" formaction="/set_ch.html" type="submit">Channels
+        Value</button> <button formmethod="get" \="" formaction="/set_sched.html"
+        type="submit">Channels Schedule</button> <button formmethod="get" \=""
+        formaction="/set_wifi.html" type="submit">WiFi SetUp</button> <input value="Reboot"
+        \="" onclick="sr()" type="button"> </form>
+    <script src="sslac.js">  </script>
+    <script>
+    document.getElementById('ver').innerHTML = get_version();
+    setInterval(get_info,1000);
+    
+            function get_info(){
+              var arr=get_rest('info');
+              if (arr[1][1]!=0) set_rest('isSetupCh=0');
+                var body
+                if (arr[1][12]==0) body=    '<br><p><font color="red">***** Error !!!   PCA9685 module not found *****</font></p>';
+                else body="";
+                if (arr[1][13]==0) body+='<br><p><font color="yellow">***** Warning !!! Any RTC module not found *****</font></p>';
+                if (arr[1][14]==0) body+='<br><p><font color="yellow">***** Warning !!! Time not set *****</font></p>';
+                
+                  body+='\
+                            <br>Uptime is: '+arr[3][0]+' days, '+arr[3][1]+' hours, '+arr[3][2]+' minutes, '+arr[3][3]+' seconds\
+				  			<br>Curent time is: ';
+                if (arr[2][0]<10) body+='0'+arr[2][0]+':';else body+=arr[2][0]+':';
+                if (arr[2][1]<10) body+='0'+arr[2][1]+':';else body+=arr[2][1]+':';
+                if (arr[2][2]<10) body+='0'+arr[2][2]; else body+=arr[2][2];
+                body+='<br><br>\
+                            ID: '+arr[1][18]+'<br>\
+                            IP address is: '+arr[1][10]+'<br>\
+                            SDA pin connected to GPIO'+arr[1][6]+'<br>\
+                            SCL pin connected to GPIO'+arr[1][7]+'<br>\
+                            OneWire must be connected to GPIO13<br>\
+                            ';
+                document.getElementById('body').innerHTML = body;
+              if (arr[1][17]==1) document.getElementById('hostname').innerHTML = arr[1][15]+'(Slave)';
+              if (arr[1][16]==1) document.getElementById('hostname').innerHTML = arr[1][15]+'(Master)';
+              if ((arr[1][16]==0) & (arr[1][17]==0)) document.getElementById('hostname').innerHTML = arr[1][15];
+         }
+                
+      </script>
+  </body>
+</html>

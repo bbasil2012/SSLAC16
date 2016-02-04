@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
+    <title>SSLAC16</title>
+  </head>
+  <body style="background-color: #00bebe;">
+    <h1>
+      <div id="hostname"></div>
+    </h1>
+    <h5><div id="ver"></div></h5>
+    <h3>Channels Schedule</h3>
+    <form action="/" method="get"><input value="&lt;-Back" type="submit"> <button
+        formmethod="get" formaction="/cur_ch.html" type="submit">View Channels
+        status</button> </form>
+    <br>
+    Channels group:
+    <select id="ch_group" oninput="select_ds('ch_group')">
+      <option id="0-7">0-7</option>
+      <option id="8-15">8-15</option>
+    </select>
+    <br>
+    LED/Fan group:
+    <select id="func_group" oninput="select_ds('func_group')">
+      <option id="LED">LED</option>
+      <option id="Fan">Fan</option>
+    </select>
+    <br>
+    <form id="body"></form>
+    <form action="/"> <br>
+      <input value="Save" onclick="sv()" type="button"> <button formmethod="get"
+        formaction="/set_time.html" type="submit">Time SetUp</button> <button formmethod="get"
+        formaction="/set_i2c.html" type="submit">I2C SetUp</button> <button formmethod="get"
+        formaction="/set_ch.html" type="submit">Channels Value</button> <button
+        formmethod="get" formaction="/set_wifi.html" type="submit">WiFi SetUp</button>
+    </form>
+    <script src="sslac.js">  </script>
+    <script>
+      document.getElementById('ver').innerHTML = get_version();
+    get_info();  
+  
+      
+      
+      _url='';
+        var cSensor;
+        var temp=[];
+        var ch;
+  var tp;
+  var body='';
+  display_func('0-7','LED');
+      
+  function table_header (_func){
+    if (_func=="Fan"){
+    var _body='<table style="width: 512px" border="0">\
+      <tbody>\
+        <tr>\
+<td>ID</td><td>Descrition</td><td>ds18x20</td><td>T min(C)</td><td>T max(C)</td><td>T current(C)</td>\
+        </tr>\
+        <tr>\
+         <br></tr> \
+        </tr>';
+    } else {
+      var _body='<table style="width: 512px" border="0">\
+      <tbody>\
+        <tr>\
+          <td>ID</td><td >Descrition</td><td>Sunrise start</td><td>Day start</td><td>Sunset start</td><td>Night start</td>\
+        </tr>\
+        <tr>\
+         <br></tr> \
+        </tr>';
+    }
+    return _body;
+    
+  }
+      
+  function s_temp(_m,_ch){
+    
+    var tmin=document.getElementById("tmin"+_ch).value;
+    var tmax=document.getElementById("tmax"+_ch).value;
+    set_rest('tp='+_ch+'&=day&='+tmin+'&='+tmax);
+  }
+//***************************************************************************************
+  function display_led(_ch_group){
+      
+      var a;
+      var b;
+      var _body='';
+      get_data();
+      _body=table_header("LED");
+      if (_ch_group=='0-7') {
+          a=0;b=8;
+      }else {
+        a=8;b=16;
+      }
+ 
+    for (i=a;i<b;i++){
+      
+      if (ch[i][4]!=99){
+        
+        _body+='<tr>\n\
+        <td>'+i+')</td>\n\
+        <td>'+ch[i][5]+'</td>\n\
+        <td>\
+<input type="time" value="'+add_digits(tp[i][0])+':'+add_digits(tp[i][1])+'" id="sunrise'+i+'" oninput="inp(\'sunrise\','+i+')">\
+        </td>\n\
+        <td>\
+<input type="time" value="'+add_digits(tp[i][2])+':'+add_digits(tp[i][3])+'" id="day'+i+'" oninput="inp(\'day\','+i+')">\
+        </td>\n\
+        <td>\
+<input type="time" value="'+add_digits(tp[i][4])+':'+add_digits(tp[i][5])+'" id="sunset'+i+'" oninput="inp(\'sunset\','+i+')">\
+        </td>\n\
+        <td>\
+<input type="time" value="'+add_digits(tp[i][6])+':'+add_digits(tp[i][7])+'" id="night'+i+'" oninput="inp(\'night\','+i+')">\
+        </td>\n';  
+      }
+      
+    }
+      _body+='</tbody></tr></tbody></table></form>';
+    
+      return _body;
+  }
+//***************************************************************************************
+
+  function display_temp(_ch_group){
+    var _temp='';
+    var a;
+    var b;
+    var _body='';
+    get_data();
+    
+    _body=table_header("Fan");
+    if (_ch_group=='0-7') {
+      a=0;b=8;
+    }else {
+      a=8;b=16;
+    }
+    for(i=a;i<b;i++){
+      if (ch[i][4]==99){
+        _body+='<tr>\n\
+          <td>'+i+')</td>\n\
+          <td>'+ch[i][5]+'</td>\n\
+          <td><select oninput="select_ds(\''+i+'\')">\n';
+              _temp='<select onchange="select_ds()">\n';
+              
+              for(j=0;j<cSensor;j++){
+                
+                _body+='<option id="c'+i+'d'+j+'"';
+                if (tp[i][1]==j) _body+=' selected';
+                _body+='>'+temp[j][10]+'</option>\n';
+                
+              }  
+        
+          _body+='</select>\n\
+          </td>\n\
+          <td>\
+            <input size="6" maxlen="6" type="number" id="tmin'+i+'" value='+tp[i][2]+' onchange="s_temp(\'min\',\''+i+'\')">\
+          </td>\n\
+          <td>\
+              <input size="6" maxlen="6" type="number" id="tmax'+i+'" value='+tp[i][3]+' onchange="s_temp(\'max\',\''+i+'\')">\
+          </td>\n\
+          <td>';
+        if (cSensor==0 || tp[i][1]>cSensor) _body+='Not found'; else _body+=temp[tp[i][1]][9]/1000;
+        _body+='</td>\n\
+          </td>\n';
+        
+      }
+    }
+    
+   
+    
+    _body+='</tbody></tr></tbody></table></form>';
+   
+   
+   
+    return _body;
+  
+  }
+      function display_func(_ch,_func){
+        
+        if (_func=='Fan'){
+            
+            document.getElementById('body').innerHTML = display_temp(_ch);
+        }
+        if (_func=='LED'){
+          document.getElementById('body').innerHTML = display_led(_ch);
+        }
+      }
+  function select_ds(_ch){
+    switch (_ch) {
+      case "func_group":
+
+          display_func(document.getElementById("ch_group").value,document.getElementById(_ch).value);
+
+          break;
+      case "ch_group":
+        display_func(document.getElementById(_ch).value,document.getElementById("func_group").value);
+
+        
+          break;
+      default:
+          
+          for (j=0;j<cSensor;j++){
+            if (document.getElementById("c"+_ch+"d"+j).selected){
+              set_rest('tp='+_ch+'&=sunrise&=99&='+j);
+            }
+          }
+    }
+    
+    
+ 
+        
+  }
+  function get_data(){
+    get_ch();
+    get_tp();
+    get_temp();
+  }
+  function get_ch(_ch){
+          ch=get_rest('ch');
+  }
+  function get_tp(_ch){
+    tp=get_rest('tp');
+  }
+    
+    function get_temp(){
+        cSensor=get_rest('temp');
+    for (i=0;i<cSensor;i++){
+          temp[i]=get_rest('temp='+i);
+      }
+  }
+      function add_digits(_digits){
+        if (_digits<10) return '0'+_digits; else return _digits;
+      }
+
+function inp(s,n){
+    var req = '';
+    
+    var val=document.getElementById(s+n).value;
+  
+    val='July 21, 1000 '+val+':00';
+    var d = new Date(val);
+    set_rest('tp='+n+'&='+s+'&='+d.getHours()+'&='+d.getMinutes());
+}
+function get_info(){
+             var _arr=get_rest('info');
+           if (_arr[1][17]==1) document.getElementById('hostname').innerHTML = _arr[1][15]+'(Slave)';
+           if (_arr[1][16]==1) document.getElementById('hostname').innerHTML = _arr[1][15]+'(Master)';
+           if ((_arr[1][16]==0) & (_arr[1][17]==0)) document.getElementById('hostname').innerHTML = _arr[1][15]; 
+           
+}      
+
+</script>
+  </body>
+</html>

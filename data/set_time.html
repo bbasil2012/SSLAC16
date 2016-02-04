@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
+    <title>SSLAC16</title>
+  </head>
+  <body onload="get_time()" bgcolor="#00BEBE">
+    <h1>
+      <div id="hostname"></div>
+    </h1>
+    <h5><div id="ver"></div></h5>
+    <h3>Setup time</h3>
+    <form action="/" method="get"><input value="&lt;-Back" type="submit"> <button
+        formmethod="get" formaction="/cur_ch.html" type="submit">View Channels
+        status</button> </form>
+    <form>
+      <div id="body"></div>
+      Time Zone UTC : <input step="0.5" max="12" min="-12" id="tz" onchange="set_save_time('1')"
+        type="number"><br>
+      <br>
+      <button onclick="ntp()">Sync Time from NTP server</button><br>
+      <button onclick="fPC()">Sync Time from local PC</button><br>
+      <br>
+      <br>
+      <input value="Save" onclick="set_save_time('0')" type="button"> <button formmethod="get"
+        formaction="/set_i2c.html" type="submit">I2C SetUp</button> <button formmethod="get"
+        formaction="/set_ch.html" type="submit">Channels Value</button> <button
+        formmethod="get" formaction="/set_sched.html" type="submit">Channels
+        Schedule</button> <button formmethod="get" formaction="/set_wifi.html"
+        type="submit">WiFi SetUp</button> </form>
+    <script src="sslac.js">  </script>
+    <script>
+      document.getElementById('ver').innerHTML = get_version();
+      var tz =0;
+      var arr;
+      setInterval("get_time()",1000);
+      get_info(); 
+    
+      function fPC(){
+          var c_Date = new Date();
+        
+        set_rest('time=&h='+c_Date.getHours()+'&m='+c_Date.getMinutes()+'&s='+(c_Date.getSeconds()+1));
+         
+          
+      }
+  function ntp(){
+    set_rest('time=ntp');
+  }
+  
+  function set_save_time(_tz){
+
+    val=parseFloat(document.getElementById('tz').value);
+    var Second = arr[0][0]*3600+arr[0][1]*60+arr[0][2]+(val-tz)*3600;
+    var Hour=parseInt(Second % 86400 / 3600);
+    var Minute = parseInt(Second %  3600 / 60);
+    Second = parseInt(Second % 60);
+    tz=val;
+    val=val*10+127;
+    set_rest('&time=&tz='+val+'&h='+Hour+'&m='+Minute+'&s='+Second);
+    if (_tz==0){
+      sv();
+    }
+    
+  }
+  function get_time(){
+    
+                  arr=get_rest('time');
+                  
+                
+                body='<p>Current SSLAC16 Time: ';
+                if (arr[0][0]<10) body+='0'+arr[0][0]+':';else body+=arr[0][0]+':';
+                if (arr[0][1]<10) body+='0'+arr[0][1]+':';else body+=arr[0][1]+':';
+                if (arr[0][2]<10) body+='0'+arr[0][2];else body+=arr[0][2];
+                if (tz==0){
+                  tz=(arr[2][0]-127)/10;
+                  document.getElementById('tz').value=tz;
+                  
+                }
+                document.getElementById('body').innerHTML = body;
+    
+    }
+function get_info(){
+ var _arr=get_rest('info');
+    if (_arr[1][17]==1) document.getElementById('hostname').innerHTML = _arr[1][15]+'(Slave)';
+    if (_arr[1][16]==1) document.getElementById('hostname').innerHTML = _arr[1][15]+'(Master)';
+    if ((_arr[1][16]==0) & (_arr[1][17]==0)) document.getElementById('hostname').innerHTML = _arr[1][15]; 
+}
+
+</script>
+  </body>
+</html>

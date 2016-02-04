@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
+  </head>
+  <body bgcolor="#00BEBE">
+    <h1>
+      <div id="hostname"></div>
+    </h1>
+    <h5>
+      <div id="ver"></div>
+    </h5>
+    <h3>I2C&amp;1Wire Setup</h3>
+    <form action="/" method="get"><input value="&lt;-Back" type="submit"> <button
+        formmethod="get" formaction="/cur_ch.html" type="submit">View Channels
+        status</button> </form>
+    <br>
+    <title>SSLAC16</title>
+    <form onload="get_info()">
+      <p>SDA pin: GPIO<input step="1" max="16" min="1" id="pSDA" oninput="set_val('pSDA')"
+          type="number"></p>
+      <p>SCL pin: GPIO<input step="1" max="16" min="1" id="pSCL" oninput="set_val('pSCL')"
+          type="number"></p>
+      <p>PWM Freq:<input step="10" max="1500" min="40" id="pwmFreq" onchange="set_val('pwmFreq')"
+          type="number"></p>
+      <table style="width: 512px" border="1">
+        <caption>Temperature alarm setting:</caption>
+        <tbody>
+          <tr>
+            <td><div id="alarm"></div>
+            </td>
+            <td>Temperture C:<br>
+              <input step="1" max="100" id="alarm.temp" oninput="alarm_temp('alarm','temp')"
+                type="number"><br>
+            </td>
+            <td>Step:<br>
+              <input step="1" max="255" id="alarm.step" oninput="alarm_temp('alarm','step')"
+                type="number"><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <input value="Rescan DS18x20" onclick="onewire('rescan')" type="button"> <input
+        value="Clear  DS18x20" onclick="onewire('clear')" type="button"><br>
+      <br>
+      Founded sensors:
+      <div id="temperature"></div>
+      <br>
+      <input value="Save" onclick="sv()" type="button"> <button formmethod="get"
+        formaction="/set_time.html" type="submit">Time SetUp</button> <button formmethod="get"
+        formaction="/set_ch.html" type="submit">Channels Value</button> <button
+        formmethod="get" formaction="/set_sched.html" type="submit">Channels
+        Schedule</button> <button formmethod="get" formaction="/set_wifi.html"
+        type="submit">WiFi SetUp</button> </form>
+    <script src="sslac.js">  </script>
+    <script>
+ document.getElementById('ver').innerHTML = get_version();
+  get_info();
+  function set_val(name){
+    var val=document.getElementById(name).value;
+    set_rest(name+'='+val);
+  }
+      function alarm_temp(a,b){
+        //alert(document.getElementById(a+'.'+b).value);
+        set_rest(a+'=&'+b+'='+document.getElementById(a+'.'+b).value);
+      }
+  function get_info(){
+       var arr=get_rest('info');
+        document.getElementById('pSDA').value = arr[1][6];
+        document.getElementById('pSCL').value = arr[1][7];
+        document.getElementById('pwmFreq').value = arr[1][4];
+        if (arr[1][17]==1) document.getElementById('hostname').innerHTML = arr[1][15]+'(Slave)';
+        if (arr[1][16]==1) document.getElementById('hostname').innerHTML = arr[1][15]+'(Master)';
+        if ((arr[1][16]==0) & (arr[1][17]==0)) document.getElementById('hostname').innerHTML = arr[1][15];
+        var cSensor=get_rest('temp');
+        cSensor=cSensor[0];
+        
+        var body='';
+        var _alarm='Sensor:<br>\
+            <select id="alarm.index" oninput="alarm_temp(\'alarm\',\'index\')">\
+              <option value=255>Not use</option>';
+              
+            
+        for(i=0;i<cSensor;i++) {
+            var sens=get_temp(i)
+            body+='DS18x20('+i+') <input type="text" id="ds'+i+'" value="'+sens[3]+'" onchange="temp_desc(\''+i+'\')"> address:'+sens[0]+'<br>';
+            if (i==arr[6][1]) _alarm+='<option value="'+i+'" selected >'+sens[3]+'</option>'; else _alarm+='<option value="'+i+'">'+sens[3]+'</option>';
+          
+        }
+        _alarm+='</select>';
+        if (body=='') body="No DS18x20 found<br>";
+    
+        document.getElementById('temperature').innerHTML=body;
+        document.getElementById('alarm').innerHTML=_alarm;
+        document.getElementById('alarm.temp').value=arr[6][2];
+        document.getElementById('alarm.step').value=arr[6][3];
+  }
+      function temp_desc(iSens){
+        set_rest('temp='+iSens+'&='+document.getElementById('ds'+iSens).value);
+      }
+
+  function onewire(_command){
+    set_rest('1wire='+_command);
+    get_info();
+  }
+  function get_temp(iSens){
+          var temp_out = [];
+              var _Sensor=get_rest('temp='+iSens);
+                temp_out[0]=byteToHex(_Sensor[0])+':'
+                +byteToHex(_Sensor[1])+':'
+                +byteToHex(_Sensor[2])+':'
+                +byteToHex(_Sensor[3])+':'
+                +byteToHex(_Sensor[4])+':'
+                +byteToHex(_Sensor[5])+':'
+                +byteToHex(_Sensor[6])+':'
+                +byteToHex(_Sensor[7]);
+                temp_out[1]=_Sensor[8]
+                temp_out[2]=_Sensor[9]/1000;
+                temp_out[3]=_Sensor[10];
+        return temp_out;
+  }    
+  
+
+</script>
+  </body>
+</html>
