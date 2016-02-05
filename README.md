@@ -48,12 +48,15 @@ We strongly recommend using a program that comes with Arduino IDE for ESP8266
 Separately it can be downloaded at various  OS here: https://github.com/igrr/esptool-ck/releases
 
 #####1 .The main firmware:
-esptool -v -cp "COM-port" -cb 115200 -ca 0x00000000 -cf 0x0-SSLAC16-v0.35rev5.bin
-where "COM-port" name of COM port. For example on my Mac OS X NodeMCU designated as /dev/tty.SLAB_USBtoUART
-#####Latest release can be found there: https://github.com/bbasil2012/SSLAC16/releases/latest
-You need restart your module and after restarting the module in the list of available WiFi networks should appear SSLAC_xxxxxxxx Network
+######Latest release can be found there: https://github.com/bbasil2012/SSLAC16/releases/latest
+esptool -v -cp "COM-port" -cb 115200 -ca 0x00000000 -cf 0x0-SSLAC16-v0.35rev5.bin  
+where "COM-port" name of COM port.  
+For example on my Mac OS X NodeMCU designated as /dev/tty.SLAB_USBtoUART
+
+You need restart your module and after restarting the module in the list of available WiFi networks should appear SSLAC_xxxxxxxx (Where xxxxxxxx - password) 
+
 And now you can upload SPIFFS image by WiFi network from page http://194.168.4.1/rescue 
-or upload all .html and .js files separately (I recomend uploaf files separately)
+or upload all .html and .js files separately (I recomend upload files separately)
 #####2. Additional file(SPIFFS image)
 
 
