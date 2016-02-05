@@ -1,23 +1,23 @@
 echo 'Upload Master_Slave.html'
-curl -s  -F filedata=@data/Master_Slave.html http://192.168.4.1/upload >/dev/null
+curl -s  -F filedata=@../data/Master_Slave.html http://192.168.4.1/upload >/dev/null
 echo 'Upload favicon.ico'
-curl -s  -F filedata=@data/favicon.ico http://192.168.4.1/upload >/dev/null
+curl -s  -F filedata=@../data/favicon.ico http://192.168.4.1/upload >/dev/null
 echo 'Upload set_ch.html'
-curl -s  -F filedata=@data/set_ch.html http://192.168.4.1/upload >/dev/null
+curl -s  -F filedata=@../data/set_ch.html http://192.168.4.1/upload >/dev/null
 echo 'Upload set_sched.html'
-curl -s  -F filedata=@data/set_sched.html http://192.168.4.1/upload >/dev/null
+curl -s  -F filedata=@../data/set_sched.html http://192.168.4.1/upload >/dev/null
 echo 'Upload set_wifi.html'
-curl -s  -F filedata=@data/set_wifi.html http://192.168.4.1/upload >/dev/null
+curl -s  -F filedata=@../data/set_wifi.html http://192.168.4.1/upload >/dev/null
 echo 'Upload cur_ch.html'
-curl -s  -F filedata=@data/cur_ch.html http://192.168.4.1/upload >/dev/null
+curl -s  -F filedata=@../data/cur_ch.html http://192.168.4.1/upload >/dev/null
 echo 'Upload root_page.html'
-curl -s  -F filedata=@data/root_page.html http://192.168.4.1/upload >/dev/null
+curl -s  -F filedata=@../data/root_page.html http://192.168.4.1/upload >/dev/null
 echo 'Upload set_i2c.html'
-curl -s  -F filedata=@data/set_i2c.html http://192.168.4.1/upload >/dev/null
+curl -s  -F filedata=@../data/set_i2c.html http://192.168.4.1/upload >/dev/null
 echo 'Upload set_time.html'
-curl -s  -F filedata=@data/set_time.html http://192.168.4.1/upload >/dev/null
+curl -s  -F filedata=@../data/set_time.html http://192.168.4.1/upload >/dev/null
 echo 'Upload sslac.js'
-curl -s  -F filedata=@data/sslac.js http://192.168.4.1/upload >/dev/null
+curl -s  -F filedata=@../data/sslac.js http://192.168.4.1/upload >/dev/null
 
 echo 'Set channels value...'
 for ((i=0; i<16; i++))
