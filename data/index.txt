@@ -7,5 +7,4 @@ set_i2c.html
 set_sched.html
 set_time.html
 set_wifi.html
-test.html
 sslac.js
