@@ -32,7 +32,7 @@ The controller can also have its own name ex: 1st_Tank_control.
 10. The module can to work as a client of existing Wi-Fi network and as WiFi "access point" - it can be connected to an existing Wi-Fi network and can connect to it from any device.
 11. Master/slave mode for multiple controllers.
 12. Temperature alarm with master/slave synchronisation functionality
-
+comming soon: anattended update to the latest version (by button press)
 
 
 ###What do you need to purchase:
