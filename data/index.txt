@@ -1,1 +1,12 @@
+Master_Slave.html
+Master_Slave.html
+cur_ch.html
+favicon.ico
+root_page.html
+set_ch.html
+set_i2c.html
+set_sched.html
+set_time.html
+set_wifi.html
+test.html
 sslac.js
