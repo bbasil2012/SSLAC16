@@ -1,5 +1,5 @@
 Short installation guide
-
+For unix like OS
 bash-3.2$ esptool -v -cd nodemcu -cp /dev/tty.SLAB_USBtoUART -cb 115200 -ca 0x00000000 -cf bin/4mb/0x0-SSLAC16-v0.35rev5.bin
   esptool v0.4.6 - (c) 2014 Ch. Klippel <ck@atelier-klippel.de>
   opening port /dev/tty.SLAB_USBtoUART at 115200
