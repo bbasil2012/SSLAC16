@@ -32,7 +32,7 @@ The controller can also have its own name ex: 1st_Tank_control.
 10. The module can to work as a client of existing Wi-Fi network and as WiFi "access point" - it can be connected to an existing Wi-Fi network and can connect to it from any device.
 11. Master/slave mode for multiple controllers.
 12. Temperature alarm with master/slave synchronisation functionality
-comming soon: anattended update to the latest version (by button press)
+Сomming soon: anattended update to the latest version (by button press)
 
 
 ###What do you need to purchase:
@@ -54,13 +54,9 @@ where "COM-port" name of COM port.
 For example on my Mac OS X NodeMCU designated as /dev/tty.SLAB_USBtoUART
 
 You need restart your module and after restarting the module in the list of available WiFi networks should appear SSLAC_xxxxxxxx (Where xxxxxxxx - password) 
-
+#####2. Additional file(SPIFFS image)
 And now you can upload SPIFFS image by WiFi network from page http://194.168.4.1/rescue 
 or upload all .html and .js files separately (I recomend upload files separately)
-#####2. Additional file(SPIFFS image)
 
-
-
-After restarting the module in the list of available WiFi networks should appear SSLAC_xxxxxxxx Network
 
 Connect to the network module, type http://192.168.4.1 in the address bar and ehjoy :)
