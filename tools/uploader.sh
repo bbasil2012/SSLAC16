@@ -34,5 +34,8 @@ done
 curl  -s 'http://192.168.4.1/set?isSlave=0' >/dev/null
 curl  -s 'http://192.168.4.1/set?isMaster=0' >/dev/null
 curl  -s 'http://192.168.4.1/set?&time=&tz=157&h=15&m=50&s=3' >/dev/null
+curl  -s 'http://192.168.4.1/set?&pSDA=4' >/dev/null
+curl  -s 'http://192.168.4.1/set?&pSCL=5' >/dev/null
+
 echo 'Saving...'
 curl  -s 'http://192.168.4.1/sv' >/dev/null
