@@ -1,3 +1,6 @@
+ _URL='https://raw.githubusercontent.com/bbasil2012/SSLAC16/main/latest/';
+ _HTML='data/index.txt';
+ _FirmWare='bin/4mb/version'; 
     function sv(){
           if (window.XMLHttpRequest){
             var xmlhttp=new XMLHttpRequest();
@@ -17,7 +20,6 @@
         }
 function get_rest(req){
   var resp;
-//alert ('get_rest: '+req);
   if (window.XMLHttpRequest){
      var xmlhttp=new XMLHttpRequest();
   }else{
@@ -36,7 +38,6 @@ function get_rest(req){
 }
 
 function set_rest(req){
-//alert('set_rest: '+req);
   if (window.XMLHttpRequest){
      var xmlhttp=new XMLHttpRequest();
   }else{
@@ -54,3 +55,51 @@ function byteToHex(b) {
 function get_version(){
     return get_rest('version');
 }
+
+  function uFirmWare(){
+    var files=get_version_github(_URL,_FirmWare);
+    alert(files[0]);
+    updater(_URL+'bin/4mb/',files[0])
+  }
+  
+  function uHTML(){
+    var files=get_version_github(_URL,_HTML);
+    alert(files);
+    for (i=0;i<Object.keys(files).length; i++){
+        updater(_URL+'data/',files[i]);
+    }
+  }
+  function get_version_github(uURL,uFileName) { 
+  var resp;
+ if (window.XMLHttpRequest){
+     var xmlhttp=new XMLHttpRequest();
+  }else{
+     var xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+  }
+  xmlhttp.onreadystatechange=function() {
+     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+       resp= JSON.parse(xmlhttp.responseText);
+     }
+  }
+  xmlhttp.open('GET', uURL+uFileName, false);
+  xmlhttp.send();
+  return resp;
+  }
+  function updater(uURL,uFileName) {
+    sURL='/upload';
+    window.URL = window.URL || window.webkitURL;
+    var xhr_dowload = new XMLHttpRequest();
+    xhr_dowload.open('GET',uURL+uFileName , true);
+    xhr_dowload.responseType = "blob";
+    xhr_dowload.onload = function(e) {
+      if (this.status == 200) {
+        var blob = this.response;
+        var fd = new FormData();
+        fd.append("afile", blob,uFileName);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', sURL, false);
+        xhr.send(fd);
+      }
+    };
+  xhr_dowload.send();
+  }
