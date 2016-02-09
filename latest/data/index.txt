@@ -1,4 +1,4 @@
-["Master_Slave.html,
+["Master_Slave.html",
 "cur_ch.html",
 "favicon.ico",
 "root_page.html",
