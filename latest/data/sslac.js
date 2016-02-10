@@ -72,17 +72,22 @@ function get_version(){
     return get_rest('version');
 }
 
-  function uFirmWare(pIP){
-    var files=get_version_github(_URL,_FirmWare,pID);
+  function uFirmWare(pID){
+    get_version_github(_URL,_FirmWare);
     //alert(files[0]);
-    updater(_URL+'bin/4mb/',files[0])
+    updater(_URL+'bin/4mb/',files[0],pID);
   }
   
   function uHTML(pID){
     var files=get_version_github(_URL,_HTML);
     //alert(pID);
+    document.getElementById(pID).value =0;
     for (i=0;i<Object.keys(files).length; i++){
         updater(_URL+'data/',files[i],pID);
+        var percentage = Math.round((i+1/Object.keys(files).length)*100);
+	console.log("percent " + percentage + '%' );
+	//document.getElementById("demo").innerHTML =percentage+'%';
+	document.getElementById(pID).value =percentage;
     }
   }
   function get_version_github(uURL,uFileName) { 
