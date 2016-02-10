@@ -74,6 +74,7 @@ function get_version(){
   function uFirmWare(pID){
     var files=get_version_github(_URL,_FirmWare);
     updater(_URL+'bin/4mb/',files[0],pID);
+    alert("FirmWare updated. Rebooting.");
   }
   
   function uHTML(pID){
@@ -85,6 +86,7 @@ function get_version(){
 	console.log("percent " + percentage + '%' );
 	document.getElementById(pID).value =percentage;
     }
+    alert("User interface updated");
   }
   function get_version_github(uURL,uFileName) { 
   var resp;
