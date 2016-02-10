@@ -52,21 +52,36 @@ function byteToHex(b) {
     var hexChar = ['0', '1', '2', '3', '4', '5', '6', '7','8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
         return hexChar[(b >> 4) & 0x0f] + hexChar[b & 0x0f];
 }
+function update_progress(e)
+{
+    if (e.lengthComputable)
+    {
+	var percentage = Math.round((e.loaded/e.total)*100);
+	console.log("percent " + percentage + '%' );
+	//document.getElementById("demo").innerHTML =percentage+'%';
+	document.getElementById(pID).value =percentage;
+    }
+    else 
+    {
+	console.log("Unable to compute progress information since the total size is unknown");
+    }
+}  
+
 function get_version(){
     return get_rest('version');
 }
 
-  function uFirmWare(){
-    var files=get_version_github(_URL,_FirmWare);
+  function uFirmWare(pIP){
+    var files=get_version_github(_URL,_FirmWare,pID);
     alert(files[0]);
     updater(_URL+'bin/4mb/',files[0])
   }
   
-  function uHTML(){
+  function uHTML(pID){
     var files=get_version_github(_URL,_HTML);
     alert(files);
     for (i=0;i<Object.keys(files).length; i++){
-        updater(_URL+'data/',files[i]);
+        updater(_URL+'data/',files[i],pID);
     }
   }
   function get_version_github(uURL,uFileName) { 
@@ -85,12 +100,13 @@ function get_version(){
   xmlhttp.send();
   return resp;
   }
-  function updater(uURL,uFileName) {
+  function updater(uURL,uFileName,pID) {
     sURL='/upload';
     window.URL = window.URL || window.webkitURL;
     var xhr_dowload = new XMLHttpRequest();
     xhr_dowload.open('GET',uURL+uFileName , true);
     xhr_dowload.responseType = "blob";
+    xhr_dowload.onprogress = update_progress;
     xhr_dowload.onload = function(e) {
       if (this.status == 200) {
         var blob = this.response;

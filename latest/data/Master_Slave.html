@@ -19,9 +19,10 @@
     <br>
     Master<input id="master" onchange="sel('master')" type="checkbox"><br>
     Slave<input id="slave" onchange="sel('slave')" type="checkbox"> <br>
+    <input value="HTML/JS update" onclick="uHTML('pHTML')" type="button"style="width: 120px; height: 20px;"> <progress id="pHTML" value="0" max="100"></progress><br>
+    <input value="FirWare update" onclick="uFirmWare('pFirmWare')" type="button"style="width: 120px; height: 20px;"> <progress id="pFirmWare" value="0" max="100"></progress><br>
     <div id="master_id"></div>
     <br>
-    
     <br>
     <form method="POST" action="/upload" enctype="multipart/form-data"> <input
         name="myfile1" size="20" lang="en" type="file"> <input value="Upload" type="submit">
@@ -39,7 +40,7 @@
     <script src="sslac.js">  </script>
     <script>
       document.getElementById('ver').innerHTML = get_version();
-setInterval(get_info,1000);
+      //setInterval(get_info,1000);
     
             function get_info(){
               var arr=get_rest('info');
@@ -87,6 +88,38 @@ setInterval(get_info,1000);
     }
 
   }
+      function CheckUpdates(){
+        var resp;
+//alert ('get_rest: '+req);
+  if (window.XMLHttpRequest){
+     var xmlhttp=new XMLHttpRequest();
+  }else{
+     var xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+  }
+  xmlhttp.onreadystatechange=function() {
+     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+       
+       resp=JSON.parse(xmlhttp.responseText);
+       //return resp;
+       var _resp=get_version();
+       if (resp[0]!=_resp[0]) alert(resp+'\n<>\n'+_resp); else alert('You have actual version');
+       //window.downloadFile = function('https://github.com/bbasil2012/SSLAC16/blob/main/bin/4mb/0x0-SSLAC16-v0.35rev5.bin') {
+       downloadFile('https://github.com/bbasil2012/SSLAC16/blob/main/bin/4mb/0x0-SSLAC16-v0.35rev5.bin?raw=true');
+
+     }
+  }
+  xmlhttp.open('GET', 'https://raw.githubusercontent.com/bbasil2012/SSLAC16/main/bin/4mb/version', false);
+  xmlhttp.send();
+        
+      }
+      function downloadFile(sUrl){
+        if (window.XMLHttpRequest) var xmlhttp=new XMLHttpRequest(); else var xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+        xmlhttp.open('GET', sUrl, true);
+        xmlhttp.send();
+        
+  
+        
+      }
 </script>
   </body>
 </html>
