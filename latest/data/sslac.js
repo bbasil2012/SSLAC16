@@ -54,12 +54,13 @@ function byteToHex(b) {
 }
 function update_progress(e)
 {
+    console.log(_pID);
     if (e.lengthComputable)
     {
 	var percentage = Math.round((e.loaded/e.total)*100);
 	console.log("percent " + percentage + '%' );
 	//document.getElementById("demo").innerHTML =percentage+'%';
-	document.getElementById(pID).value =percentage;
+	document.getElementById(_pID).value =percentage;
     }
     else 
     {
@@ -73,13 +74,13 @@ function get_version(){
 
   function uFirmWare(pIP){
     var files=get_version_github(_URL,_FirmWare,pID);
-    alert(files[0]);
+    //alert(files[0]);
     updater(_URL+'bin/4mb/',files[0])
   }
   
   function uHTML(pID){
     var files=get_version_github(_URL,_HTML);
-    alert(files);
+    //alert(pID);
     for (i=0;i<Object.keys(files).length; i++){
         updater(_URL+'data/',files[i],pID);
     }
@@ -102,6 +103,9 @@ function get_version(){
   }
   function updater(uURL,uFileName,pID) {
     sURL='/upload';
+    
+    _pID=pID;
+    //alert(_pID);
     window.URL = window.URL || window.webkitURL;
     var xhr_dowload = new XMLHttpRequest();
     xhr_dowload.open('GET',uURL+uFileName , true);
