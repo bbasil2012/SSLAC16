@@ -59,7 +59,6 @@ function update_progress(e)
     {
 	var percentage = Math.round((e.loaded/e.total)*100);
 	console.log("percent " + percentage + '%' );
-	//document.getElementById("demo").innerHTML =percentage+'%';
 	document.getElementById(_pID).value =percentage;
     }
     else 
@@ -73,20 +72,17 @@ function get_version(){
 }
 
   function uFirmWare(pID){
-    get_version_github(_URL,_FirmWare);
-    //alert(files[0]);
+    var files=get_version_github(_URL,_FirmWare);
     updater(_URL+'bin/4mb/',files[0],pID);
   }
   
   function uHTML(pID){
     var files=get_version_github(_URL,_HTML);
-    //alert(pID);
     document.getElementById(pID).value =0;
     for (i=0;i<Object.keys(files).length; i++){
         updater(_URL+'data/',files[i],pID);
-        var percentage = Math.round((i+1/Object.keys(files).length)*100);
+        var percentage = Math.round( ((i+1)/Object.keys(files).length)*100 );
 	console.log("percent " + percentage + '%' );
-	//document.getElementById("demo").innerHTML =percentage+'%';
 	document.getElementById(pID).value =percentage;
     }
   }
@@ -110,7 +106,6 @@ function get_version(){
     sURL='/upload';
     
     _pID=pID;
-    //alert(_pID);
     window.URL = window.URL || window.webkitURL;
     var xhr_dowload = new XMLHttpRequest();
     xhr_dowload.open('GET',uURL+uFileName , true);
