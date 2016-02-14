@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title>SSLAC16</title>
+  </head>
+  <body onload="get_info()" style="   background-color: #00BEBE;">
+    <h1>
+      <div id="hostname"></div>
+    </h1>
+    <h5>
+      <div id="ver"></div>
+    </h5>
+    <br>
+    <form action="/" method="get"><input value="&lt;-Back" type="submit"> <button
+        formmethod="get" formaction="/cur_ch.html" type="submit">View Channels
+        status</button> </form>
+    <br>
+    Master<input id="master" onchange="sel('master')" type="checkbox"><br>
+    Slave<input id="slave" onchange="sel('slave')" type="checkbox"> <br>
+    <input value="HTML/JS update" onclick="uHTML('pHTML')" type="button"style="width: 120px; height: 20px;"> <progress id="pHTML" value="0" max="100"></progress><br>
+    <input value="FirmWare update" onclick="uFirmWare('pFirmWare')" type="button"style="width: 120px; height: 20px;"> <progress id="pFirmWare" value="0" max="100"></progress><br>
+    <div id="master_id"></div>
+    <br>
+    <br>
+    <form method="POST" action="/upload" enctype="multipart/form-data"> <input
+        name="myfile1" size="20" lang="en" type="file"> <input value="Upload" type="submit">
+    </form>
+    <br>
+    <br>
+    <form> <input value="Save" onclick="sv()" type="button"> <button formmethod="get"
+        \="" formaction="/set_time.html" type="submit">Time SetUp</button> <button
+        formmethod="get" \="" formaction="/set_i2c.html" type="submit">I2C SetUp</button>
+      <button formmethod="get" \="" formaction="/set_ch.html" type="submit">Channels
+        Value</button> <button formmethod="get" \="" formaction="/set_sched.html"
+        type="submit">Channels Schedule</button> <button formmethod="get" \=""
+        formaction="/set_wifi.html" type="submit">WiFi SetUp</button> <input value="Reboot"
+        \="" onclick="sr()" type="button"> </form>
+    <script src="sslac.js">  </script>
+    <script>
+      document.getElementById('ver').innerHTML = get_version();
+      //setInterval(get_info,1000);
+    
+            function get_info(){
+              var arr=get_rest('info');
+              
+              
+              if (arr[1][17]==1) document.getElementById('hostname').innerHTML = arr[1][15]+'(Slave)';
+              if (arr[1][16]==1) document.getElementById('hostname').innerHTML = arr[1][15]+'(Master)';
+              if ((arr[1][16]==0) & (arr[1][17]==0)) document.getElementById('hostname').innerHTML = arr[1][15]; 
+              
+              
+              if (arr[1][16]==1) 
+                  document.getElementById('master').checked=true; 
+                else
+                  document.getElementById('master').checked=false;
+
+              if (arr[1][17]==1) 
+                  document.getElementById('slave').checked=true; 
+                else
+                  document.getElementById('slave').checked=false;
+              
+              if (arr[1][17]==1) {
+                if (arr[1][19]!=0) document.getElementById('master_id').innerHTML = 'Found master ID: '+arr[1][19];
+                  else document.getElementById('master_id').innerHTML = 'No master found: ';
+              }
+              
+            }
+  function sel(s){
+    if (s=='master'){
+      if(document.getElementById(s).checked) {
+        document.getElementById('slave').checked=false;
+        set_rest('isMaster=1'); 
+        set_rest('isSlave=0'); 
+      } else  
+        set_rest('isMaster=0');
+        
+    }
+    if (s=='slave'){
+     
+      if(document.getElementById(s).checked) { 
+        document.getElementById('master').checked=false;
+        set_rest('isSlave=1');
+        set_rest('isMaster=0');
+  
+      } else set_rest('isSlave=0');
+    }
+
+  }
+      function CheckUpdates(){
+        var resp;
+//alert ('get_rest: '+req);
+  if (window.XMLHttpRequest){
+     var xmlhttp=new XMLHttpRequest();
+  }else{
+     var xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+  }
+  xmlhttp.onreadystatechange=function() {
+     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+       
+       resp=JSON.parse(xmlhttp.responseText);
+       //return resp;
+       var _resp=get_version();
+       if (resp[0]!=_resp[0]) alert(resp+'\n<>\n'+_resp); else alert('You have actual version');
+       //window.downloadFile = function('https://github.com/bbasil2012/SSLAC16/blob/main/bin/4mb/0x0-SSLAC16-v0.35rev5.bin') {
+       downloadFile('https://github.com/bbasil2012/SSLAC16/blob/main/bin/4mb/0x0-SSLAC16-v0.35rev5.bin?raw=true');
+
+     }
+  }
+  xmlhttp.open('GET', 'https://raw.githubusercontent.com/bbasil2012/SSLAC16/main/bin/4mb/version', false);
+  xmlhttp.send();
+        
+      }
+      function downloadFile(sUrl){
+        if (window.XMLHttpRequest) var xmlhttp=new XMLHttpRequest(); else var xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+        xmlhttp.open('GET', sUrl, true);
+        xmlhttp.send();
+        
+  
+        
+      }
+</script>
+  </body>
+</html>
