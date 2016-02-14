@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html> 
+ 
+ <input value="HTML/JS update" onclick="move()" style="width: 120px; height: 20px;"
+     type="button"> <progress id="pHTML" value="0" max="100"></progress><br>
+     <input value="FirmWare update" onclick="uFirmWare('pFirmWare')" style="width: 120px; height: 20px;"
+       type="button"> <progress id="pFirmWare" value="0" max="100"></progress><br>
+<style> 
+ #myProgress {
+   width: 100%;
+   height: 30px;
+   position: relative;
+   background-color: #ddd;
+ }
+
+ #myBar {
+   background-color: #4CAF50;
+   width: 10px;
+   height: 30px;
+   position: absolute;
+ }
+ </style>
+ <body >
+
+ <h1>JavaScript Progress Bar</h1>
+
+ <div id="myProgress">
+   <div id="myBar"></div>
+ </div>
+
+ <br>
+ <button onclick="move()">Click Me</button>
+ 
+ </body>
+ </html>
+ 
+<script> 
+ var elem = document.getElementById("myBar");
+ var elem2 = document.getElementById("pHTML");
+ elem2.value=0;
+ var width = 0;
+ //init_frame(); 
+ //var id = setInterval(frame(), 10);
+ _URL='https://raw.githubusercontent.com/bbasil2012/SSLAC16/main/latest/';
+ _HTML='data/index.txt';
+ _FirmWare='bin/4mb/version'; 
+ sURL="http://192.168.4.1/upload"
+ var intfiles;
+ var i;
+ var data_blob;
+ //var pHTMP=document.getElementById('pHTML');
+ 
+ 
+ //var elem = document.getElementById("myBar");   
+ //var width = 0;
+ //function init_frame(){
+//	 alert("init");
+//	 frame();
+//	 id= setInterval(frame(), 10);
+// }
+// frame();
+ //var id = setInterval(frame, 10);
+ 
+ //alert(pHTML);
+ //function set_prg(value){
+ //	   pHTML.value = value*10;
+// }
+ //setInterval (set_prg(),100);
+ get_intfiles(_URL,_HTML);
+ //alert(i);
+ //for (i=0;i<10;i++){
+	 //console.log(i);
+	 //document.getElementById('pHTML').value = i*10;
+	 //setTimeout(5000);
+	 //setTimeout(get_blob(intfiles[i],i),1000);
+	 //width=i;
+	 
+	 
+	 //}
+// get_blob(intfiles[0],0);
+ //pHTML.value=10;
+//get_blob(intfiles[1],1);
+///i++;
+ //pHTML.value=20;
+// get_blob(intfiles[2],2);
+ //i++;
+ //pHTML.value=30;
+ //get_blob(intfiles[3],3);
+ //i++;
+ //pHTML.value=40;
+ //get_blob(intfiles[4],4);
+ //pHTML.value=50;
+ //get_blob(intfiles[5],5);
+ //pHTML.value=60;
+ //get_blob(intfiles[6],6);
+ //pHTML.value=70;
+ //get_blob(intfiles[7],7);
+ //pHTML.value=80;
+ //get_blob(intfiles[8],8);
+ //pHTML.value=90;
+ //get_blob(intfiles[9],9);
+ //pHTML.value=100;
+ //alert(i);
+ //get_blob(_URL+"bin/4mb/0x0-SSLAC16-v0.35rev5.bin",100);
+ 
+ function Complete_intfiles(evt) {
+	 //alert(this.responseText);
+	 intfiles=JSON.parse(this.response);
+ }
+ function Complete_blob(evt){
+	 
+	 var data_blob= new Blob;
+	 data_blob=this.response;
+	 
+     var fd = new FormData();
+	 console.log("data len:"+data_blob.length+"<>"+intfiles[width]);
+	 fd.append("afile", data_blob,intfiles[width]);
+	 //fd.append("filename",intfiles[width])
+	//var blob = new Blob();
+	//blob=data_blob;
+	//alert(blob);
+     //fd.append("file-name",data_blob,"text.txt");
+   	 if (window.XMLHttpRequest){
+   	     var xmlhttp_u=new XMLHttpRequest();
+   	  }else{
+   	     var xmlhttp_u=new ActiveXObject('Microsoft.XMLHTTP');
+   	  }
+         //var fd = new FormData();
+         //fd.append("afile", _data,intfiles[index]);
+   	  //console.log(fd.getAll());
+   	  setTimeout(xmlhttp_u.open('POST', sURL,false));
+   	  setTimeout(xmlhttp_u.send(fd));
+	  width++;
+	 //console.log("Complete"+data.length+"<>"+i);
+	 //this.return=100;
+	 //upload_blob(data_blob);
+	 //console.log(this.responseURL);
+	 
+ 	
+ }
+ function get_intfiles(uURL,uFileName) { 
+ var resp;
+if (window.XMLHttpRequest){
+    var xmlhttp=new XMLHttpRequest();
+ }else{
+    var xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+ }
+ xmlhttp.addEventListener("load", Complete_intfiles, false);
+ xmlhttp.open('GET', uURL+uFileName,false);
+ xmlhttp.send();
+ }
+ //function upload_blob(_data,index){
+	 
+	 //console.log("Uploading:"+intfiles[index]+" "+_data.length+" bytes");
+	 //if (window.XMLHttpRequest){
+	  //   var xmlhttp=new XMLHttpRequest();
+	 // }else{
+	 //    var xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+	  //}
+      //var fd = new FormData();
+      //fd.append("afile", _data,intfiles[index]);
+	  //console.log(fd.getAll());
+	  //xmlhttp.open('POST', sURL,false);
+	  //xmlhttp.send(_data);
+	  
+	 //pHTML.value=i*10;
+	 //}
+ 
+ //function get_blob(uFileName,index){
+	// if (window.XMLHttpRequest){
+	//     var xmlhttp=new XMLHttpRequest();
+	//  }else{
+	 //    var xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+	//  }
+	//  xmlhttp.addEventListener("load", Complete_blob, false);
+  	  //xmlhttp.responseType = "blob";
+    //  xmlhttp.open('GET',_URL+"data/"+uFileName,false);	
+	//  xmlhttp.overrideMimeType('text/plain; charset=x-user-defined');
+	  //xmlhttp.responseType = "blob";
+	  //xmlhttp.responseType = 'arraybuffer';
+	//  xmlhttp.send();
+	//  console.log(index);
+	  //pHTML.value=index;
+	  //set_prg(index);
+// }
+ 
+ function move() {
+   var elem = document.getElementById("myBar");   
+   var width = 0;
+   var id = setInterval(frame, 10);
+   function frame() {
+	   //console.log("frame>"+width);
+     if (width == intfiles.length) {
+       clearInterval(id);
+	   alert("Well Done");
+	   //console.log("clean");
+     } else {
+		 
+//****************************************************************		 
+		 if (window.XMLHttpRequest){
+		     var xmlhttp=new XMLHttpRequest();
+		  }else{
+		     var xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+		  }
+		  xmlhttp.addEventListener("load", Complete_blob, false);
+	  	  //xmlhttp.responseType = "blob";
+	      setTimeout(xmlhttp.open('GET',_URL+"data/"+intfiles[width]));	
+		  //xmlhttp.overrideMimeType('text/plain; charset=x-user-defined');
+		  xmlhttp.responseType = "blob";
+		  //xmlhttp.responseType = 'arraybuffer';
+		  setTimeout(xmlhttp.send());
+		  console.log(width); 
+		 
+		//get_blob(intfiles[width],width);
+		
+//****************************************************************
+       	//width++; 
+       	elem.style.width = (width+1)*10 + '%'; 
+	   	elem2.value=(width+1)*10;
+        
+		//alert(fd.afile);
+		//console.log(fd.length);
+//*******************************************************************		
+   	
+		
+		
+		//upload_blob(fd,width);
+//********************************************************************
+		width++;
+     }
+   }
+ }
+ 
+ 
+ </script>

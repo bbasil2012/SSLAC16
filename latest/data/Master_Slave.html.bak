@@ -23,11 +23,6 @@
     type="button"> <progress id="pHTML" value="0" max="100"></progress><br>
     <input value="FirmWare update" onclick="uFirmWare('pFirmWare')" style="width: 120px; height: 20px;"
       type="button"> <progress id="pFirmWare" value="0" max="100"></progress><br>
-    <input value="SPIFFS update" onclick="uSPIFFS('pSPIFFS')" style="width: 120px; height: 20px;"
-      type="button"> <progress id="pSPIFFS" value="0" max="100"></progress><br>
-    
-    
-    
     <div id="master_id"></div>
     <br>
     <br>
