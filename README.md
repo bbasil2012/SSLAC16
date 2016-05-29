@@ -1,5 +1,5 @@
 #SSLAC16
-(actual version 0.35rev5)
+(actual version 0.36rev0)
 
 ##Simple&Smart LED Aquarium Controller 16 channels 
 controled over Wi-Fi via WEB interface.
@@ -14,26 +14,35 @@ controled over Wi-Fi via WEB interface.
 
 
 ###Why it is “smart”:
+######version 0.36r0
+"To control the light in real time"
 
-1. 16 channels. Dimming 12 bits of dept (4096 steps) with a frequency from 50 to 1500Hz.
-2. Each channel has individual settings for 4 time points: start of the Sunrise, start of the Day (maximum mode), start of the Sunset, start of the Night (minimum mode)
-3. For each channel individual setting for  ​​dimming values of the Day and Night mode, the values ​​in transient conditions (sunrise / sunset) calculated by the controller itself.
-4. Each channel can be configured Inverse mode - convenient when using LED drivers with different type of dimming.
-5. In addition to the standard mode of operation channel, there is a possibility of the channel defined as a controlled fan cooling and "snap" them to any or temperature sensor. Number of temperature sensors up to 8. In this case, each sensor can be "linked" with any number of channels.
-6. Each channel and each temperature sensor may have their own name (16 characters maximum)
-This allows you to remove the need to remember a channel number which corresponds to. 
-You can simply write: Warm_white, Sump_fan etc.
-Likewise, you can give the names of the temperature sensor: T_LedModule1, T_MainTank etc.
-And (relate) link  them to one-to-another only by their own names.
-The controller can also have its own name ex: 1st_Tank_control.
-7. "Emergency light" - when suddenly in the night you need to turn light ON in the aquarium - press the "flash" button on the module. SSLAC forcibly convert all channels into daily (maximum) mode. Pressing the button disables.
-8. You can create and upload your own HTML pages for management.
-9. On the Air update/upgrade firmware (only for 4mb version), SPIFFS filesystem image (for all version) and individual files on the SPIFFS filesystem
-10. The module can to work as a client of existing Wi-Fi network and as WiFi "access point" - it can be connected to an existing Wi-Fi network and can connect to it from any device.
-11. Master/slave mode for multiple controllers.
-12. Temperature alarm with master/slave synchronisation functionality
-Сomming soon: anattended update to the latest version (by button press)
 
+#####16 "time points."
+individually for each light control channel. (Total maximum of 256 points)
+ 
+#####16 control channels.
+Each control channel can specify your own name up to 32 characters (or 16 characters with the use of the national language in the 2-byte character set) That is a multi-language support channel names
+The color display on the daily schedule can be set and changed by the user.
+Each channel can be one of two types:
+-channel light control.
+-channel control cooling fan.
+ 
+#####8 groups of channels. (Yes, now the channels can be randomly scattered on 8 groups)
+For each group, you can specify your own name up to 32 characters (or 16 characters with the use by the national language 2-byte encodings), multi-language support group names
+Each group may contain any number of light control channels (0 to 16)
+you can assign a "temperature alarm" Each channel group.
+#####8 "temperature alarm"
+For each channel group, you can set your own critical temperature and decreasing step dimming values ​​for the channels of the group.
+#####"PlayTime" function
+Using this feature, you can see in real time as will appear on your aquarium light at any given time.
+Functions can be applied both to all channels at once, and to any group of channels.
+ 
+#####Mode. "Emergency light"
+May use any number of light control channels. Each used channel has individual dimming settings for this mode.
+ 
+#####8 temperature sensors tip.DS18x20
+Each temperature sensor can control any number of cooling channels and control any number of "temperature alarm"
 
 ###What do you need to purchase:
 1. The module based ESP8266, recommend NodeMCU.
@@ -49,7 +58,7 @@ Separately it can be downloaded at various  OS here: https://github.com/igrr/esp
 
 #####1 .The main firmware:
 ######Latest release can be found there: https://github.com/bbasil2012/SSLAC16/releases/latest
-esptool -v -cp "COM-port" -cb 115200 -ca 0x00000000 -cf 0x0-SSLAC16-v0.35rev5.bin  
+esptool -v -cp "COM-port" -cb 115200 -ca 0x00000000 -cf 0x0-SSLAC16-v0.36rev0.bin  
 where "COM-port" name of COM port.  
 For example on my Mac OS X NodeMCU designated as /dev/tty.SLAB_USBtoUART
 
