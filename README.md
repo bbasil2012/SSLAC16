@@ -69,3 +69,6 @@ or upload all .html and .js files separately (I recomend upload files separately
 
 
 Connect to the network module, type http://192.168.4.1 in the address bar and ehjoy :)
+
+Short video:
+https://youtu.be/XsKu5m_CHkc
