@@ -72,3 +72,6 @@ Connect to the network module, type http://192.168.4.1 in the address bar and eh
 
 Short video:
 https://youtu.be/XsKu5m_CHkc
+
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)]
+(https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CWUB7PSBK44GU)
