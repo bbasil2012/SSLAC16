@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+      <html>
+        <head>
+          <meta content="text/html; charset=utf-8" http-equiv="content-type">
+        </head>
+        <body onload="get_info()" style="background-color:#00bebe">
+          <table style="width:800px;height:4px;font-size:14px" border="0">
+            <tbody>
+              <tr style="height:15px">
+                <td>
+                  <div id="ver"></div>
+                  <table style="width:400px" border="0">
+                    <tbody>
+                      <tr style="height:15px">
+                        <td>hostname</td>
+                        <td>
+                          <div id="hostname"></div>
+                          <br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>IP address</td>
+                        <td>
+                          <div id="ipaddr"></div>
+                          <br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>SSID</td>
+                        <td>
+                          <div id="ssid"></div>
+                          <br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div id="add1"></div>
+                          <br>
+                        </td>
+                        <td>
+                          <div id="add2"></div>
+                          <br>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td>
+                  <table style="width:100%" border="1">
+                    <tbody>
+                      <tr>
+                        <td>Current Time</td>
+                        <td>
+                          <div id="curTime"></div>
+                          <br>
+                        </td>
+                        <td>RTC</td>
+                        <td>
+                          <div id="isRTC"></div>
+                          <br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Uptime</td>
+                        <td>
+                          <div id="upTime"></div>
+                          <br>
+                        </td>
+                        <td>PCA9685</td>
+                        <td>
+                          <div id="isPCA"></div>
+                          <br>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table style="width:800px" border="1">
+            <tbody>
+              <tr>
+                <td style="width:20px">
+                  <select id="sc" onchange="get_ch(this)" style="width:200px">
+                  </select>
+                </td>
+                <td><input min="0" max="4096" id="chValue" onchange="chRange(this)"
+                    type="number"></td>
+                <td><input id="cc" onchange="get_color(this)" style="width:20px"
+                    type="color"></td>
+                <td>
+                  <select id="setdef" oninput="setDefault(this)">
+                    <option value="-1">Set default value:</option>
+                    <option value="0">to Current group</option>
+                    <option value="1">to Current channel</option>
+                  </select>
+                </td>
+                <td><br>
+                </td>
+                <td style="text-align:right">
+                  <select id="st" onchange="get_tp(this)">
+                    <option value="0">Current time</option>
+                  </select>
+                </td>
+                <td style="text-align:right"><input id="currentTime" oninput="timeInput(this)"
+                    type="time"></td>
+                <td style="text-align:right"><button onclick="delTimePoint()">Delete
+                    Time Point:</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <table style="width:800px" border="0">
+            <tbody>
+              <tr>
+                <td>
+                  <select id="addToGroup" onchange="addToGroup(this)">
+                    <option value="-2">Add current channel to group:</option>
+                    <option value="-1">All</option>
+                  </select>
+                </td>
+                <td><br>
+                </td>
+                <td><br>
+                </td>
+                <td>
+                  <select id="ch_gr" onchange="get_gr(this)" onload="fillGroup()">
+                  </select>
+                </td>
+                <td><br>
+                </td>
+                <td><br>
+                </td>
+                <td style="text-align:right"><button id="_addTimePoint" onclick="addTimePoint()">Add
+                    Time Point:</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <input id="TimeSlider" name="time" min="0" max="1440" style="width:720px;left:47px;position:absolute"
+            value="720"
+            oninput="timeInput(this)"
+            onclick="timeClick(this)"
+            ondblclick="timeDbClick()"
+            type="range"><br>
+          <table style="width:800px" border="0">
+            <tbody>
+              <tr>
+                <td><svg id="idSVG" style="border:1px solid black;background:#E0FFFF"
+                    onmousedown="mouseDown(evt)"
+                    onload="createGrid()"
+                    ondblclick="svgDbClick(evt)"
+                    onmousemove="cursorMove(evt)"
+                    preserveAspectRatio="xMaxYMax meet"><text
+                      id="cursor1"
+                      fill="#0000ff"
+                      fill-opacity="0.9"
+                      font-size="13px"
+                      style="stroke:2"></text><text
+                      id="cursor2"
+                      fill="#0000ff"
+                      fill-opacity="0.9"
+                      font-size="13px"></text><defs><radialGradient
+                        id="grad1"
+                        cx="50%"
+                        cy="50%"
+                        r="50%"
+                        fx="50%"
+                        fy="50%"><stop
+                          offset="0%"
+                          style="stop-color:red;stop-opacity:0"></stop><stop
+                          offset="100%"
+                          style="stop-color:red;stop-opacity:1"></stop></radialGradient></defs></svg><br>
+                </td>
+                <td><input name="grade" orient="vertical" style="width:10px;height:256px;-webkit-appearance:slider-vertical;writing-mode:bt-lr;background-color:#38B1D9"
+                    oninput="chRange(this)"
+                    id="chValueR"
+                    min="0"
+                    max="4096"
+                    type="range"></td>
+              </tr>
+            </tbody>
+          </table>
+          <form><input value="Save" onclick="sv()" type="button"><input onclick="location.href='1SetUp.html'"
+value="Channels&amp;Group setup"
+type="button"><input
+onclick="location.href='EmLight.html'"
+value="Emergency light setup"
+type="button"><input
+onclick="location.href='Fan.html'"
+value="Fan/Temperature setup"
+type="button"><input
+onclick="location.href='setuphw.html'"
+value="Setup&amp;Upgrade"
+type="button"><input
+value="Reboot"
+\=""
+onclick="sr()"
+type="button"></form>
+          <script src="sslac.js"></script>
+          <script>
+            set_rest("EmLight=0",_ip);
+            var click=false;
+            var clickX,clickY;
+            var moveX=0,moveY=0;
+            var lastMoveY;
+            var timePoint;
+            var Current_ch=0,Current_tp=0,Current_gr=0;
+            var info;
+            var offset;
+            var lastTp;
+            var currentValue;
+            var emLightWindow;
+            var _window;
+            var Channels={
+              lastMoveX:[],
+              lastMoveY:[],
+              Color:["#00FFFF","#000000","#0000FF","#FF00FF","#808080","#008000","#00FF00","#800000","#000080","#808000","#800080","#FF0000","#C0C0C0","#008080","#FFFFFF","#FFFF00"],
+              Name:["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],
+              group:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+              type:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+              inv:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+              pwm:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+              ch_value:[[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+                        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]],
+              ch_time:[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+            };
+            var svgNS="http://www.w3.org/2000/svg";
+            var lineNumber=0;
+            var index=0;
+            var date=new Date(0);
+            var SVG_w="770";
+            var SVG_h="340";
+            var shift=40;
+            get_info();
+            fillGroup();
+            fillTime(0);
+            setInterval(disableTimeSlider,1000);
+            function setDefault(a){
+              if(a.value==0){
+                for(i=0;i<16;i++){
+                  if((Current_gr==Channels.group[i])||(Current_gr==0)){
+                    set_rest("chN="+i+"&0=10&1=4095&2=4095&3=10&4=-1&5=-1&6=-1&7=-1&8=-1&9=-1&10=-1&11=-1&12=-1&13=-1&14=-1&15=-1",_ip);
+                    set_rest("tpN="+i+"&0=420&1=720&2=780&3=1241&4=0&5=0&6=0&7=0&8=0&9=0&10=0&11=0&12=0&13=0&14=0&15=0",_ip)
+                  }
+                }
+              }else{
+                set_rest("chN="+Current_ch+"&0=10&1=4095&2=4095&3=10&4=-1&5=-1&6=-1&7=-1&8=-1&9=-1&10=-1&11=-1&12=-1&13=-1&14=-1&15=-1",_ip);
+                set_rest("tpN="+Current_ch+"&0=420&1=720&2=780&3=1241&4=0&5=0&6=0&7=0&8=0&9=0&10=0&11=0&12=0&13=0&14=0&15=0",_ip)
+              }
+              getChannelsData();
+              a.value=-1;
+              fillTime(Current_ch)
+            }
+            function disableTimeSlider(){
+              var b=get_rest("info=0",_ip);
+              if(b[1][3]<10){
+                b[1][3]="0"+b[1][3]
+              }
+              document.getElementById("upTime").innerHTML=b[1][0]+":"+returnDate(b[1][1]*3600+b[1][2]*60)+":"+b[1][3];
+              if(b[0][2]<10){
+                b[0][2]="0"+b[0][2]
+              }
+              document.getElementById("curTime").innerHTML=returnDate(b[0][0]*3600+b[0][1]*60)+":"+b[0][2];
+              document.getElementById("st").value=Current_tp;
+              document.getElementById("ch_gr").value=Current_gr;
+              document.getElementById("sc").value=Current_ch;
+              if(Current_tp==0){
+                document.getElementById("TimeSlider").disabled=true
+              }else{
+                document.getElementById("TimeSlider").disabled=false
+              }
+              if((Current_tp==0)||(Current_tp==-1)){
+                document.getElementById("chValueR").disabled=true;
+                document.getElementById("chValue").disbaled=true;
+                document.getElementById("chValue").value=b[3][Current_ch];
+                document.getElementById("chValueR").value=b[3][Current_ch]
+              }else{
+                document.getElementById("chValueR").disabled=false;
+                document.getElementById("chValue").disbaled=false
+              }
+              if(Current_tp==-1){
+                document.getElementById("_addTimePoint").disabled=false
+              }else{
+                document.getElementById("_addTimePoint").disabled=true
+              }
+              var a=document.getElementById("TimeSlider");
+              if(a.disabled){
+                a.disabled=false;
+                a.value=b[0][0]*60+b[0][1];a.disabled=true
+              }
+              a=document.getElementById("currentTime");
+              if(Current_tp==0){
+                a.value=returnDate(b[0][0]*3600+b[0][1]*60)
+              }
+            }
+            function returnDate(c){
+              var a=new Date(c*1000);
+              var b;
+              if(a.getUTCHours()<10){
+                b="0"+a.getUTCHours()+":"
+              }else{
+                b=a.getUTCHours()+":"
+              }
+              if(a.getUTCMinutes()<10){
+                b+="0"+a.getUTCMinutes()
+              }else{
+                b+=a.getUTCMinutes()
+              }
+              return b
+            }
+            function returnSecond(b){
+              var a=new Date(b*1000);
+              return a.getUTCHours()*3600+a.getUTCMinutes()*60
+            }
+            function redrawChannel(b,c){
+              if(c==undefined){
+                c=Current_gr
+              }
+              if(b==undefined){
+                b=Current_ch
+              }
+              if(Channels.type[b]!=0){
+                return
+              }
+              var d=document.getElementById("idSVG");
+              var a=d.getElementById("ch"+b);
+              if(a!=null){
+                d.removeChild(a)
+              }
+              if((Channels.group[b]==c)||(c==0)){
+                a=document.createElementNS(svgNS,"polyline");
+                a.setAttributeNS(null,"id","ch"+b);
+                _points="";
+                _points+=shift+",";
+                _points+=Math.round(shift+256-256*Channels.ch_value[b][0]/4096);
+                _points+=" "+Math.round(shift+Channels.ch_time[b][0]/120)+",";
+                _points+=Math.round(shift+256-256*Channels.ch_value[b][0]/4096);
+                for(j=0;j<16;j++){
+                  if(Channels.ch_time[b][j]!=0){
+                    _points+=" "+Math.round(shift+Channels.ch_time[b][j]/120)+",";
+                    _points+=Math.round(shift+256-256*Channels.ch_value[b][j]/4096)
+                  }
+                  else{
+                    _points+=" "+(shift+720)+",";
+                    _points+=Math.round(shift+256-256*Channels.ch_value[b][j-1]/4096);
+                    break
+                  }
+                }
+                a.setAttributeNS(null,"points",_points);
+                if(b==Current_ch){
+                  a.setAttributeNS(null,"style","fill:none;stroke:"+Channels.Color[b]+";stroke-width:5")
+                }else{
+                  a.setAttributeNS(null,"style","fill:none;stroke:"+Channels.Color[b]+";stroke-width:1")
+                }
+                d.appendChild(a)
+              }
+            }
+            function getChannelsData(){
+              var e=document.getElementById("idSVG");
+              var c=e.getElementsByTagName("*");
+              for(var a=0;a<c.length;a++){}
+              var b=(get_rest("info=",_ip));
+              group=(get_rest("grN=",_ip));
+              for(a=0;a<16;a++){
+                var d=get_rest("chN="+a,_ip);
+                Channels.Name[a]=d[6][0];
+                Channels.group[a]=d[3];
+                Channels.type[a]=d[4];
+                Channels.inv[a]=d[5];
+                Channels.Color[a]=RGBtoHEX(d[2][0],d[2][1],d[2][2]);
+                fillChannel(Current_gr);
+                for(j=0;j<16;j++){
+                  Channels.ch_value[a][j]=d[0][j];
+                  Channels.ch_time[a][j]=d[1][j]*60
+                }
+                redrawChannel(a)
+              }
+            }
+            function createGrid(){
+              var b=document.getElementById("idSVG");
+              b.setAttributeNS(null,"width",SVG_w);
+              b.setAttributeNS(null,"height",SVG_h);
+              for(i=0;i<17;i++){
+                var a=document.createElementNS(svgNS,"line");
+                a.setAttributeNS(null,"x1",shift-5);
+                a.setAttributeNS(null,"x2",725+shift);
+                a.setAttributeNS(null,"y1",i*16+shift);
+                a.setAttributeNS(null,"y2",i*16+shift);
+                a.setAttributeNS(null,"style","stroke:#b3b3b3;stroke-width:1");
+                b.appendChild(a);a=document.createElementNS(svgNS,"line");
+                a.setAttributeNS(null,"x1",(i*45)+shift);
+                a.setAttributeNS(null,"x2",(i*45)+shift);
+                a.setAttributeNS(null,"y1",shift-5);
+                a.setAttributeNS(null,"y2",260+shift);
+                a.setAttributeNS(null,"style","stroke:#b3b3b3;stroke-width:1");
+                b.appendChild(a);a=document.createElementNS(svgNS,"text");
+                a.setAttributeNS(null,"x",shift/2);
+                a.setAttributeNS(null,"y",i*16+shift);
+                a.textContent=(256-i*16)/256*100+"%";
+                a.setAttributeNS(null,"text-anchor","middle");
+                a.setAttributeNS(null,"alignment-baseline","middle");
+                a.setAttributeNS(null,"style","stroke:#0086b3;stroke-width:1");
+                a.setAttributeNS(null,"font-size","10px");
+                b.appendChild(a);
+                a=document.createElementNS(svgNS,"text");
+                a.setAttributeNS(null,"x",i*45+shift);
+                a.setAttributeNS(null,"y",256+16+shift);
+                a.textContent=returnDate((i*45)*120);
+                a.setAttributeNS(null,"text-anchor","middle");
+                a.setAttributeNS(null,"alignment-baseline","middle");
+                a.setAttributeNS(null,"style","stroke:#4d4d4d;stroke-width:1");
+                b.appendChild(a)
+              }
+              offset=b.getClientRects()[0];
+              offset.top=Math.round(offset.top);
+              offset.left=Math.round(offset.left);
+              get_info();getChannelsData();
+              fillTime(Current_ch);
+              fillGroup(Current_ch)
+            }
+            function Select(a){
+              _style="width: 25px; height: 200px;-webkit-appearance: slider-vertical;		 writing-mode: bt-lr;		 background-color: #FF00FF";
+              a.setAttribute("style",_style)
+            }
+            function unSelect(a){
+              _style="width: 20px; height: 200px;-webkit-appearance: slider-vertical;		 writing-mode: bt-lr;		 background-color: #FFFFFF";
+              a.setAttribute("style",_style)
+            }
+            function getColor(d,c){
+              a=document.getElementById("ch_gr");
+              while(a.length!=0){
+                a.remove(a.lengt)
+              }
+              for(i=0;i<group.length;i++){
+                var b=document.createElement("option");
+                b.text=group[0][i];b.value=i;
+                a.add(b)
+              }
+              a.value=Channels.group[d.value];
+              var e=document.getElementById("idSVG");
+              var a=e.getElementById("ch"+c);
+              a.setAttribute("style","fill:none;stroke-width:1;stroke:"+d.value);
+              a=e.getElementById("tPoly");
+              if(a!=null){
+                e.removeChild(a)
+              }
+            }
+            function get_ch(b){
+              Current_ch=parseInt(b.value);
+              isCurrentTime=true;
+              var d=parseInt(Channels.group[Current_ch]);
+              if(parseInt(d)!=parseInt(Current_gr)){
+                Current_gr=d;changeGroup(Current_gr)
+              }
+              setColor(b.value);
+              fillTime(b.value);
+              var c=document.getElementById("idSVG");
+              var a=c.getElementById("ch"+b.value);
+              for(i=0;i<16;i++){
+                a=c.getElementById("ch"+i);
+                if(a!=null){
+                  a.setAttribute("style","fill:none;stroke-width:1;stroke:"+Channels.Color[i])
+                }
+              }
+              a=c.getElementById("ch"+b.value);
+              if(a!=null){
+                a.setAttribute("style","fill:none;stroke-width:5;stroke:"+Channels.Color[b.value])
+              }
+            }
+            function get_info(){
+              info=(get_rest("info=",_ip));
+              var a=get_rest("version=",_ip);
+              var b=document.getElementById("currentTime");
+              if(Current_tp==0){
+                b.value=returnDate(info[2][0]*3600+info[2][1]*60)
+              }
+              document.getElementById("hostname").innerHTML=info[1][15]+", ID:"+info[1][18];
+              if(info[1][12]!=0){
+                document.getElementById("isPCA").innerHTML="Found"
+              }else{
+                document.getElementById("isPCA").innerHTML="Error !!!"
+              }
+              switch(info[1][13]){
+                case 0:document.getElementById("isRTC").innerHTML="Error";
+                  break;
+                case 1:document.getElementById("isRTC").innerHTML="DS1307/DS3231";
+                  break;
+                case 2:document.getElementById("isRTC").innerHTML="PCF8563";
+                  break;
+                default:break
+              }
+              if(info[1][9]==0){
+                document.getElementById("ssid").innerHTML="Not connected";
+                document.getElementById("ipaddr").innerHTML=info[1][20]
+              }else{
+                document.getElementById("ssid").innerHTML=info[1][11];
+                document.getElementById("ipaddr").innerHTML=info[1][10]
+              }
+              b=document.getElementById("TimeSlider");
+              if(b.disabled){
+                b.disabled=false;
+                b.value=info[2][0]*60+info[2][1];
+                b.disabled=true
+              }
+              document.getElementById("ver").innerHTML=a[0]+" v"+a[1]+"."+a[2]+"rev"+a[3]+" compiled on "+a[4]+" "+a[5]
+            }
+            function get_color(f){
+              var c=document.getElementById("sc");
+              Channels.Color[c.value]=f.value;
+              getColor(f,c.value);
+              var e=toR(f.value);
+              var a=toB(f.value);
+              var d=toG(f.value);
+              set_rest("colorN="+Current_ch+"&="+e+"&="+d+"&="+a,_ip)
+            }
+            function get_tp(b){
+              if(b.value==0){
+                isCurrentTime=true;
+                document.getElementById("TimeSlider").value=info[2][0]*60+info[2][1];
+                set_rest("playTime=255",_ip)
+              }else{
+                set_rest("playTime="+Current_gr,_ip);
+                isCurrentTime=false;
+                var c=document.getElementById("sc").value;
+                var a=Channels.ch_time[c][b.value-1];
+                getAllPWM(a,Current_gr);
+                document.getElementById("TimeSlider").value=returnSecond(a)/60;
+                document.getElementById("currentTime").value=returnDate(a);
+                setValueRange(Channels.ch_value[c][b.value-1])
+              }
+              Current_tp=b.value
+            }
+            function getAllPWM(c,b){
+              var a="chN=all";
+              for(j=0;j<16;j++){
+                if((Current_gr==0)&(Channels.type[j]==0)){
+                  a+="&"+j+"="+getPWM(j,c);
+                  Channels.pwm[j]=getPWM(j,c)
+                }else{
+                  if((Channels.group[j]==Current_gr)&(Channels.type[j]==0)){
+                    a+="&"+j+"="+getPWM(j,c);
+                    Channels.pwm[j]=getPWM(j,c)
+                  }
+                }
+              }
+              set_rest(a,_ip)
+            }
+            function timeInput(c){
+              var b=document.getElementById("st").value;
+              if(c.id=="TimeSlider"){
+                document.getElementById("currentTime").value=returnDate(c.value*60);
+                Channels.ch_time[Current_ch][b-1]=c.value*60;
+                redrawChannel(Current_ch);
+                if(Current_tp>0){
+                  set_rest("tpN="+Current_ch+"&"+(Current_tp-1)+"="+c.value,_ip)
+                }
+                getAllPWM(c.value*60,Current_gr)
+              }
+              if(c.id=="currentTime"){
+                var e=new Date("Jan 1, 1971 "+c.value);
+                var a=e.getHours()*60+e.getMinutes();
+                Channels.ch_time[Current_ch][b-1]=a*60;
+                redrawChannel(Current_ch)
+              }
+            }
+            function addToGroup(d){
+              var c=document.getElementById("sc");
+              var a=c.value;
+              var b=d.value;
+              Current_gr=d.value;get_gr();
+              if(d.value!=-2){
+                Channels.group[a]=d.value
+              }
+              set_rest("grN="+a+"&="+d.value,_ip);
+              redrawChannel(a,b);
+              setChannels();
+              fillTime(a);
+              changeGroup(b);
+              d.value=-2
+            }
+            function timeClick(a){
+              if(Current_tp==0){
+                a.value=info[2][0]*60+info[2][1]
+              }
+            }
+            function changeGroup(a){
+              Current_gr=a;
+              fillChannel(Current_gr);
+              for(i=0;i<16;i++){
+                redrawChannel(i,Current_gr)
+              }
+              if(Current_tp!=0){
+                set_rest("playTime="+Current_gr,_ip)
+              }
+            }
+            function get_gr(a){
+              if(a!=null){
+                changeGroup(a.value)
+              }
+            }
+            function getChannel(){
+              var a=document.getElementById("sc");return a.value
+            }
+            function getGroup(){
+              var a=document.getElementById("ch_gr");
+              return a.value
+            }
+            function fillChannel(a){
+              var b=document.getElementById("sc");
+              while(b.length!=0){
+                b.remove(b.lengt)
+              }
+              if(Channels.group[Current_ch]!=Current_gr){
+                for(i=0;i<16;i++){
+                  if(Channels.group[i]==a){
+                    Current_ch=i;
+                    break
+                  }
+                }
+              }
+              for(i=0;i<16;i++){
+                if((a==0)||(Channels.group[i]==a)){
+                  if(a==0){
+                    Current_ch=0
+                  }
+                  var c=document.createElement("option");
+                  if(Channels.group[i]==0){
+                    c.text=i+")"+Channels.Name[i]
+                  }else{
+                    c.text=i+")"+Channels.Name[i]+"/"+group[0][Channels.group[i]]}c.value=i;
+                  if(i==Current_ch){
+                    c.selected=true
+                  }
+                  if(Channels.type[i]!=0){
+                    c.text+=" Fan ";
+                    c.disabled=true
+                  }
+                  b.add(c)
+                }
+              }
+            }
+            function fillTime(c){
+              var a=document.getElementById("st");
+              while(a.length!=0){
+                a.remove(a.lengt)
+              }
+              var b=document.createElement("option");
+              b.text="Current time";
+              b.value=0;
+              if(Current_tp==0){
+                b.selected=true
+              }
+              a.add(b);
+              b=document.createElement("option");
+              b.text="Play time";
+              b.value=-1;
+              if(Current_tp==-1){
+                b.selected=true
+              }
+              a.add(b);
+              for(i=0;i<16;i++){
+                if(Channels.ch_time[c][i]!=undefined){
+                  if(Channels.ch_time[c][i]!=0){
+                    var b=document.createElement("option");
+                    b.text=returnDate(Channels.ch_time[c][i]);
+                    b.value=i+1;
+                    if(i+1==Current_tp){
+                      b.selected=true
+                    }
+                    a.add(b)
+                  }
+                }
+              }
+              lastTp=a.length-2
+            }
+            function fillGroup(){
+              group=(get_rest("grN=",_ip));
+              var a=document.getElementById("ch_gr");
+              while(a.length!=0){
+                a.remove(a.lengt)
+              }
+              var b=document.createElement("option");
+              for(i=0;i<group[0].length;i++){
+                if(group[0][i]!=""){
+                  var b=document.createElement("option");
+                  b.text=group[0][i];
+                  b.value=i;
+                  a.add(b)
+                }
+              }
+              a=document.getElementById("addToGroup");
+              while(a.length!=0){
+                a.remove(a.lengt)
+              }
+              b=document.createElement("option");
+              b.text="Add current channel to group:";
+              b.value=-2;
+              a.add(b);
+              for(i=0;i<group[0].length;i++){
+                if(group[0][i]!=""){
+                  var b=document.createElement("option");
+                  b.text=group[0][i];
+                  b.value=i;
+                  a.add(b)
+                }
+              }
+            }
+            function setChannels(){
+              _group=getGroup();
+              var a=document.getElementById("sc");
+              while(a.length!=0){
+                a.remove(a.lengt)
+              }
+              var b=document.createElement("option");
+              for(i=0;i<16;i++){
+                var b=document.createElement("option");
+                b.text=Channels.Name[i];
+                b.value=i;
+                if(Channels.group[0][i]!=0){
+                  b.text=group[0][Channels.group[i]]+":"+Channels.Name[i]
+                }
+                a.add(b)
+              }
+            }
+            function setColor(b){
+              var a=document.getElementById("cc");
+              a.value=Channels.Color[b]
+            }
+            function getPWM(g,d){
+              var e=0,c=0,f;
+              f=Channels.ch_value[g][0];
+              for(i=0;i<15;i++){
+                if(d==Channels.ch_time[g][i]){
+                  f=Channels.ch_value[g][i]
+                }
+                if((d>Channels.ch_time[g][i])&(d<Channels.ch_time[g][i+1])){
+                  e=(Channels.ch_value[g][i+1]-Channels.ch_value[g][i])/(Channels.ch_time[g][i+1]-Channels.ch_time[g][i]);
+                  c=Channels.ch_value[g][i]-Channels.ch_time[g][i]*e;
+                  f=Math.round(e*d+c)
+                }
+              }
+              return f
+            }
+            function svgDbClick(d){
+              var b=document.getElementById("ch_gr");
+              var f=document.getElementById("sc");
+              var a=(d.clientX-offset.left-shift)*120;
+              if(a<0){a=0}
+              if(a>86399){a=863999}
+              var e=returnIndex(Channels.ch_time[f.value],a);
+              if(e==undefined){e=0}
+              Channels.ch_time[f.value]=insertValue(Channels.ch_time[f.value],a);
+              a=(4096-(d.clientY-shift-offset.top)*16);
+              if(a<0){a=0}
+              if(a>4095){a=4095}
+              Channels.ch_value[f.value]=insertValue(Channels.ch_value[f.value],a,e);
+              Current_tp=e+1;
+              fillTime(f.value);
+              redrawChannel(f.value);
+              setValueRange(a);
+              var c="chN="+Current_ch;
+              for(i=0;i<16;i++){
+                c+="&"+i+"="+Channels.ch_value[Current_ch][i]
+              }
+              set_rest(c,_ip);
+              c="tpN="+Current_ch;
+              for(i=0;i<16;i++){
+                c+="&"+i+"="+Channels.ch_time[Current_ch][i]/60
+              }
+              set_rest(c,_ip)
+            }
+            function returnIndex(b,a){
+              if(b[0]==0){return 0}
+              if(a<b[0]){return 0}
+              for(i=0;i<16;i++){
+                if(b[i+1]!=0){
+                  if((a>b[i])&(a<b[i+1])){
+                    return i+1
+                  }
+                }else{
+                  return i+1
+                }
+              }
+            }
+            function insertValue(d,c,a){
+              var b=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+              if(a==undefined){a=returnIndex(d,c)}
+              for(i=0;i<a;i++){b[i]=d[i]}
+              b[a]=c;
+              for(i=a;i<15;i++){
+                b[i+1]=d[i]
+              }
+              return b
+            }
+            function deleteValue(c,a){
+              var b=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+              for(i=0;i<a;i++){b[i]=c[i]}
+              for(i=a;i<16;i++){
+                b[i]=c[i+1]
+              }
+              return b
+            }
+            function delTimePoint(){
+              if(Current_tp==0){
+                alert("Can't delete Current Time!!!");
+                return
+              }
+              Channels.ch_time[Current_ch]=deleteValue(Channels.ch_time[Current_ch],Current_tp-1);
+              Channels.ch_value[Current_ch]=deleteValue(Channels.ch_value[Current_ch],Current_tp-1);
+              fillTime(Current_ch);
+              redrawChannel(Current_ch);
+              var a="chN="+Current_ch;
+              for(i=0;i<16;i++){
+                a+="&"+i+"="+Channels.ch_value[Current_ch][i]
+              }
+              set_rest(a,_ip);
+              a="tpN="+Current_ch;
+              for(i=0;i<16;i++){
+                a+="&"+i+"="+Channels.ch_time[Current_ch][i]/60
+              }
+              set_rest(a,_ip)
+            }
+            function chRange(a){
+              if(Current_tp!=0){
+                if(Current_tp==lastTp){
+                  Channels.ch_value[Current_ch][0]=a.value;
+                  set_rest("chN="+Current_ch+"&"+(0)+"="+a.value,_ip)
+                }
+                if(Current_tp==1){
+                  Channels.ch_value[Current_ch][lastTp-1]=a.value;
+                  set_rest("chN="+Current_ch+"&"+(lastTp-1)+"="+a.value,_ip)
+                }
+                if(a.id=="chValueR"){
+                  document.getElementById("chValue").value=a.value
+                }else{
+                  document.getElementById("chValueR").value=a.value
+                }
+                Channels.ch_value[Current_ch][Current_tp-1]=a.value;redrawChannel(Current_ch);
+                set_rest("chN="+Current_ch+"&"+(Current_tp-1)+"="+a.value,_ip)
+              }
+            }
+            function cursorMove(a){
+              mouse_x=a.clientX-offset.left;mouse_y=a.clientY-offset.top;
+              var c=(mouse_x-shift-9)*120;
+              var b=(4096-(mouse_y-shift)*16);
+              var e=document.getElementById("cursor1");
+              e.setAttributeNS(null,"x",mouse_x);
+              e.setAttributeNS(null,"y",mouse_y);
+              var d=returnDate((mouse_x-shift)*120);
+              if((c>0)&(c<1440*60+1)){
+                e.textContent=d
+              }
+              e=document.getElementById("cursor2");
+              e.setAttributeNS(null,"x",mouse_x+10);
+              e.setAttributeNS(null,"y",mouse_y+10);
+              d=(4096-(mouse_y-shift)*16).toString();
+              if((b>-1)&(b<4097)){e.textContent=d}
+            }
+            function setValueRange(a){
+              document.getElementById("chValueR").value=a
+            }
+            function drawPoints(e){
+              var f=document.getElementById("idSVG");
+              for(i=0;i<16;i++){
+                var b=f.getElementById("point"+i);
+                if(b!=null){f.removeChild(b)}
+                if(e==undefined){return}
+                if((Channels.ch_value[e][i]>-1)&(e!=undefined)){
+                  var a=Math.round(shift+256-256*Channels.ch_value[e][i]/4096);
+                  var c=Math.round(shift+Channels.ch_time[e][i]/120);
+                  var d=document.createElementNS(svgNS,"circle");
+                  d.setAttributeNS(null,"id","point"+i);
+                  d.setAttributeNS(null,"cx",c);
+                  d.setAttributeNS(null,"cy",a);
+                  d.setAttributeNS(null,"r",7);
+                  d.setAttributeNS(null,"fill","url(#grad1)");
+                  d.setAttributeNS(null,"stroke","black");
+                  f.appendChild(d)
+                }
+              }
+            }
+            function addTimePoint(){
+              var b=document.getElementById("TimeSlider").value;set_rest("addTp="+b+"&group="+Current_gr,_ip);
+              for(i=0;i<16;i++){
+                if(Channels.group[i]==Current_gr){
+                  var a=get_rest("chN="+i,_ip);
+                  for(j=0;j<16;j++){
+                    Channels.ch_value[i][j]=a[0][j];
+                    Channels.ch_time[i][j]=a[1][j]*60
+                  }
+                }
+              }
+              fillTime(Current_ch)
+            };
+          </script></body></html>

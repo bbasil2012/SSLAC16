@@ -1,0 +1,9 @@
+{
+"GPIO2":  "Calcium",
+"GPIO9":  "Soda",
+"GPIO10": "Salt free",
+"GPIO12": "CaNO3",
+"GPIO14": "Ca acetat",
+"GPIO15": "Microelemet A",
+"GPIO16": "Microelement B"
+}
