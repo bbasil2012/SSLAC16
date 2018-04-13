@@ -1,3 +1,14 @@
+Friends, I started porting SLAC16 to the ESP32 platform, not only porting, but also adding new functionality:
+1. High frequency PWM, up to 19500Hz at a depth of 12bit.
+2. Number of temperature sensors increased to 16
+3. Added new types of channels:
+- Dosing
+- Timer
+4. Joint operation of several (16) controllers.
+
+Betta versions are available for download https://github.com/bbasil2012/SSLAC-ESP32
+
+
 #SSLAC16
 (actual version 0.36rev0)
 
