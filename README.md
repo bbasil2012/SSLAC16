@@ -18,18 +18,14 @@ controled over Wi-Fi via WEB interface.<br/>
 
 
 ### Why it is “simple”:<br/>
-##### You need only 2 components and 5 wires for the full functionality.<br/>
-Or you can buy from the author full-featured controller PCB (NodeMCU + RTC + PCA9685 + battery compartment)<br/>
-##### No need to learn any programming language for micro-controllers.<br/>
-##### No need to install on your computer any big and fat development environment, compile the source code, fix it etc. The necessary components are easily accessible.<br/>
-##### Very low cost<br/>
+You need only 2 components and 5 wires for the full functionality.<br/>
+No need to learn any programming language for micro-controllers.<br/>
+No need to install on your computer any big and fat development environment, compile the source code, fix it etc. The necessary components are easily accessible.<br/>
+Very low cost<br/>
 
 
 ### Why it is “smart”:<br/>
 ###### version 0.36r0<br/>
-"To control the light in real time"<br/>
-
-
 ##### 16 "time points."<br/>
 individually for each light control channel. (Total maximum of 256 points)<br/>
  
