@@ -9,42 +9,42 @@ Friends, I started porting SLAC16 to the ESP32 platform, not only porting, but a
 Betta versions are available for download https://github.com/bbasil2012/SSLAC-ESP32
 
 
-#SSLAC16
-(actual version 0.36rev0)
+#SSLAC16<br/>
+(actual version 0.36rev0)<br/>
 
-##Simple&Smart LED Aquarium Controller 16 channels 
-controled over Wi-Fi via WEB interface.
-(ESP8266 based)
-
-
-###Why it is “simple”:
-#####You need only 2 components and 5 wires for the full functionality.
-Or you can buy from the author full-featured controller PCB (NodeMCU + RTC + PCA9685 + battery compartment)
-#####No need to learn any programming language for micro-controllers.
-#####No need to install on your computer any big and fat development environment, compile the source code, fix it etc. The necessary components are easily accessible.
-#####Very low cost
+##Simple&Smart LED Aquarium Controller 16 channels<br/> 
+controled over Wi-Fi via WEB interface.<br/>
+(ESP8266 based)<br/>
 
 
-###Why it is “smart”:
-######version 0.36r0
-"To control the light in real time"
+###Why it is “simple”:<br/>
+#####You need only 2 components and 5 wires for the full functionality.<br/>
+Or you can buy from the author full-featured controller PCB (NodeMCU + RTC + PCA9685 + battery compartment)<br/>
+#####No need to learn any programming language for micro-controllers.<br/>
+#####No need to install on your computer any big and fat development environment, compile the source code, fix it etc. The necessary components are easily accessible.<br/>
+#####Very low cost<br/>
 
 
-#####16 "time points."
-individually for each light control channel. (Total maximum of 256 points)
+###Why it is “smart”:<br/>
+######version 0.36r0<br/>
+"To control the light in real time"<br/>
+
+
+#####16 "time points."<br/>
+individually for each light control channel. (Total maximum of 256 points)<br/>
  
-#####16 control channels.
-Each control channel can specify your own name up to 32 characters (or 16 characters with the use of the national language in the 2-byte character set) That is a multi-language support channel names
-The color display on the daily schedule can be set and changed by the user.
-Each channel can be one of two types:
--channel light control.
--channel control cooling fan.
+#####16 control channels.<br/>
+Each control channel can specify your own name up to 32 characters (or 16 characters with the use of the national language in the 2-byte character set) That is a multi-language support channel names<br/>
+The color display on the daily schedule can be set and changed by the user.<br/>
+Each channel can be one of two types:<br/>
+-channel light control.<br/>
+-channel control cooling fan.<br/>
  
-#####8 groups of channels. (Yes, now the channels can be randomly scattered on 8 groups)
-For each group, you can specify your own name up to 32 characters (or 16 characters with the use by the national language 2-byte encodings), multi-language support group names
-Each group may contain any number of light control channels (0 to 16)
-you can assign a "temperature alarm" Each channel group.
-#####8 "temperature alarm"
+#####8 groups of channels. (Yes, now the channels can be randomly scattered on 8 groups)<br/>
+For each group, you can specify your own name up to 32 characters (or 16 characters with the use by the national language 2-byte encodings), multi-language support group names<br/>
+Each group may contain any number of light control channels (0 to 16)<br/>
+you can assign a "temperature alarm" Each channel group.<br/>
+#####8 "temperature alarm"<br/>
 For each channel group, you can set your own critical temperature and decreasing step dimming values ​​for the channels of the group.
 #####"PlayTime" function
 Using this feature, you can see in real time as will appear on your aquarium light at any given time.
