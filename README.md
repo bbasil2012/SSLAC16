@@ -80,10 +80,11 @@ Connect to the network module, type http://192.168.4.1 in the address bar and eh
 Short video:<br/>
 https://youtu.be/XsKu5m_CHkc
 
+<br/><br/>
 
 
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CWUB7PSBK44GU)
-
+If you find this forum useful, please consider supporting it with a donation. <br />
+[![Donate](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.com/webscr?cmd=_s-xclick&hosted_button_id=CWUB7PSBK44GU)
 
 
 
